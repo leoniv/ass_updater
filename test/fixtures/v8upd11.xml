@@ -1,0 +1,480 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<v8u:updateList xmlns:v8u="http://v8.1c.ru/configuration-updates" version="1.1">
+	<v8u:date>22.09.2015T18:07:21</v8u:date>
+    <v8u:update configuration="ЗарплатаИУправлениеПерсоналом">
+        <v8u:vendor>Фирма "1С"</v8u:vendor>
+        <v8u:file>1c/HRM/3_0_8_46/1cv8.zip</v8u:file>
+        <v8u:size>36 877 298</v8u:size>
+        <v8u:version>3.0.8.46</v8u:version>
+        <v8u:target>3.0.7.74</v8u:target>
+    </v8u:update>
+    <v8u:update configuration="ЗарплатаИУправлениеПерсоналом">
+        <v8u:vendor>Фирма "1С"</v8u:vendor>
+        <v8u:file>1c/HRM/3_0_9_28/1cv8.zip</v8u:file>
+        <v8u:size>7 873 894</v8u:size>
+        <v8u:version>3.0.9.28</v8u:version>
+        <v8u:target>3.0.8.46</v8u:target>
+    </v8u:update>
+    <v8u:update configuration="ЗарплатаИУправлениеПерсоналом">
+        <v8u:vendor>Фирма "1С"</v8u:vendor>
+        <v8u:file>1c/HRM/3_0_10_32/1cv8.zip</v8u:file>
+        <v8u:size>23 014 788</v8u:size>
+        <v8u:version>3.0.10.32</v8u:version>
+        <v8u:target>3.0.9.28</v8u:target>
+    </v8u:update>
+    <v8u:update configuration="ЗарплатаИУправлениеПерсоналом">
+        <v8u:vendor>Фирма "1С"</v8u:vendor>
+        <v8u:file>1c/HRM/3_0_10_33/1cv8.zip</v8u:file>
+        <v8u:size>23 025 416</v8u:size>
+        <v8u:version>3.0.10.33</v8u:version>
+        <v8u:target>3.0.9.28</v8u:target>
+        <v8u:target>3.0.10.32</v8u:target>
+    </v8u:update>
+    <v8u:update configuration="ЗарплатаИУправлениеПерсоналом">
+        <v8u:vendor>Фирма "1С"</v8u:vendor>
+        <v8u:file>1c/HRM/3_0_11_36/1cv8.zip</v8u:file>
+        <v8u:size>31 765 541</v8u:size>
+        <v8u:version>3.0.11.36</v8u:version>
+        <v8u:target>3.0.10.32</v8u:target>
+        <v8u:target>3.0.10.33</v8u:target>
+        <v8u:target>3.0.11.1</v8u:target>
+        <v8u:target>3.0.11.34</v8u:target>
+    </v8u:update>
+    <v8u:update configuration="ЗарплатаИУправлениеПерсоналом">
+        <v8u:vendor>Фирма "1С"</v8u:vendor>
+        <v8u:file>1c/HRM/3_0_11_39/1cv8.zip</v8u:file>
+        <v8u:size>31 947 325</v8u:size>
+        <v8u:version>3.0.11.39</v8u:version>
+        <v8u:target>3.0.10.32</v8u:target>
+        <v8u:target>3.0.10.33</v8u:target>
+        <v8u:target>3.0.11.1</v8u:target>
+        <v8u:target>3.0.11.34</v8u:target>
+        <v8u:target>3.0.11.36</v8u:target>
+    </v8u:update>
+    <v8u:update configuration="ЗарплатаИУправлениеПерсоналом">
+        <v8u:vendor>Фирма "1С"</v8u:vendor>
+        <v8u:file>1c/HRM/3_0_11_41/1cv8.zip</v8u:file>
+        <v8u:size>1 562 650</v8u:size>
+        <v8u:version>3.0.11.41</v8u:version>
+        <v8u:target>3.0.11.36</v8u:target>
+        <v8u:target>3.0.11.39</v8u:target>
+    </v8u:update>
+    <v8u:update configuration="ЗарплатаИУправлениеПерсоналом">
+        <v8u:vendor>Фирма "1С"</v8u:vendor>
+        <v8u:file>1c/HRM/3_0_12_38/1cv8.zip</v8u:file>
+        <v8u:size>10 721 638</v8u:size>
+        <v8u:version>3.0.12.38</v8u:version>
+        <v8u:target>3.0.11.41</v8u:target>
+        <v8u:target>3.0.12.32</v8u:target>
+    </v8u:update>
+    <v8u:update configuration="ЗарплатаИУправлениеПерсоналом">
+        <v8u:vendor>Фирма "1С"</v8u:vendor>
+        <v8u:file>1c/HRM/3_0_12_40/1cv8.zip</v8u:file>
+        <v8u:size>10 757 785</v8u:size>
+        <v8u:version>3.0.12.40</v8u:version>
+        <v8u:target>3.0.11.41</v8u:target>
+        <v8u:target>3.0.12.32</v8u:target>
+        <v8u:target>3.0.12.38</v8u:target>
+    </v8u:update>
+    <v8u:update configuration="ЗарплатаИУправлениеПерсоналом">
+        <v8u:vendor>Фирма "1С"</v8u:vendor>
+        <v8u:file>1c/HRM/3_0_12_41/1cv8.zip</v8u:file>
+        <v8u:size>1 698 372</v8u:size>
+        <v8u:version>3.0.12.41</v8u:version>
+        <v8u:target>3.0.12.38</v8u:target>
+        <v8u:target>3.0.12.40</v8u:target>
+    </v8u:update>
+    <v8u:update configuration="ЗарплатаИУправлениеПерсоналом">
+        <v8u:vendor>Фирма "1С"</v8u:vendor>
+        <v8u:file>1c/HRM/3_0_13_38/1cv8.zip</v8u:file>
+        <v8u:size>26 160 239</v8u:size>
+        <v8u:version>3.0.13.38</v8u:version>
+        <v8u:target>3.0.12.38</v8u:target>
+        <v8u:target>3.0.12.40</v8u:target>
+        <v8u:target>3.0.12.41</v8u:target>
+        <v8u:target>3.0.13.25</v8u:target>
+        <v8u:target>3.0.13.36</v8u:target>
+    </v8u:update>
+    <v8u:update configuration="ЗарплатаИУправлениеПерсоналом">
+        <v8u:vendor>Фирма "1С"</v8u:vendor>
+        <v8u:file>1c/HRM/3_0_13_41/1cv8.zip</v8u:file>
+        <v8u:size>1 938 525</v8u:size>
+        <v8u:version>3.0.13.41</v8u:version>
+        <v8u:target>3.0.13.36</v8u:target>
+        <v8u:target>3.0.13.38</v8u:target>
+    </v8u:update>
+    <v8u:update configuration="ЗарплатаИУправлениеПерсоналом">
+        <v8u:vendor>Фирма "1С"</v8u:vendor>
+        <v8u:file>1c/HRM/3_0_14_17/1cv8.zip</v8u:file>
+        <v8u:size>12 194 413</v8u:size>
+        <v8u:version>3.0.14.17</v8u:version>
+        <v8u:target>3.0.13.36</v8u:target>
+        <v8u:target>3.0.13.38</v8u:target>
+        <v8u:target>3.0.13.41</v8u:target>
+    </v8u:update>
+    <v8u:update configuration="ЗарплатаИУправлениеПерсоналом">
+        <v8u:vendor>Фирма "1С"</v8u:vendor>
+        <v8u:file>1c/HRM/3_0_14_20/1cv8.zip</v8u:file>
+        <v8u:size>13 086 041</v8u:size>
+        <v8u:version>3.0.14.20</v8u:version>
+        <v8u:target>3.0.13.36</v8u:target>
+        <v8u:target>3.0.13.38</v8u:target>
+        <v8u:target>3.0.13.41</v8u:target>
+        <v8u:target>3.0.14.17</v8u:target>
+    </v8u:update>
+    <v8u:update configuration="ЗарплатаИУправлениеПерсоналом">
+        <v8u:vendor>Фирма "1С"</v8u:vendor>
+        <v8u:file>1c/HRM/3_0_14_24/1cv8.zip</v8u:file>
+        <v8u:size>13 857 710</v8u:size>
+        <v8u:version>3.0.14.24</v8u:version>
+        <v8u:target>3.0.13.36</v8u:target>
+        <v8u:target>3.0.13.38</v8u:target>
+        <v8u:target>3.0.13.41</v8u:target>
+        <v8u:target>3.0.14.17</v8u:target>
+        <v8u:target>3.0.14.20</v8u:target>
+    </v8u:update>
+    <v8u:update configuration="ЗарплатаИУправлениеПерсоналом">
+        <v8u:vendor>Фирма "1С"</v8u:vendor>
+        <v8u:file>1c/HRM/3_0_14_27/1cv8.zip</v8u:file>
+        <v8u:size>3 081 610</v8u:size>
+        <v8u:version>3.0.14.27</v8u:version>
+        <v8u:target>3.0.14.24</v8u:target>
+    </v8u:update>
+    <v8u:update configuration="ЗарплатаИУправлениеПерсоналом">
+        <v8u:vendor>Фирма "1С"</v8u:vendor>
+        <v8u:file>1c/HRM/3_0_14_29/1cv8.zip</v8u:file>
+        <v8u:size>3 270 806</v8u:size>
+        <v8u:version>3.0.14.29</v8u:version>
+        <v8u:target>3.0.14.24</v8u:target>
+        <v8u:target>3.0.14.27</v8u:target>
+    </v8u:update>
+    <v8u:update configuration="ЗарплатаИУправлениеПерсоналом">
+        <v8u:vendor>Фирма "1С"</v8u:vendor>
+        <v8u:file>1c/HRM/3_0_14_30/1cv8.zip</v8u:file>
+        <v8u:size>3 278 751</v8u:size>
+        <v8u:version>3.0.14.30</v8u:version>
+        <v8u:target>3.0.14.24</v8u:target>
+        <v8u:target>3.0.14.27</v8u:target>
+        <v8u:target>3.0.14.29</v8u:target>
+    </v8u:update>
+    <v8u:update configuration="ЗарплатаИУправлениеПерсоналом">
+        <v8u:vendor>Фирма "1С"</v8u:vendor>
+        <v8u:file>1c/HRM/3_0_15_34/1cv8.zip</v8u:file>
+        <v8u:size>22 219 351</v8u:size>
+        <v8u:version>3.0.15.34</v8u:version>
+        <v8u:target>3.0.14.24</v8u:target>
+        <v8u:target>3.0.14.27</v8u:target>
+        <v8u:target>3.0.14.29</v8u:target>
+        <v8u:target>3.0.14.30</v8u:target>
+        <v8u:target>3.0.15.27</v8u:target>
+    </v8u:update>
+    <v8u:update configuration="ЗарплатаИУправлениеПерсоналом">
+        <v8u:vendor>Фирма "1С"</v8u:vendor>
+        <v8u:file>1c/HRM/3_0_15_37/1cv8.zip</v8u:file>
+        <v8u:size>22 238 555</v8u:size>
+        <v8u:version>3.0.15.37</v8u:version>
+        <v8u:target>3.0.14.24</v8u:target>
+        <v8u:target>3.0.14.27</v8u:target>
+        <v8u:target>3.0.14.29</v8u:target>
+        <v8u:target>3.0.14.30</v8u:target>
+        <v8u:target>3.0.15.27</v8u:target>
+        <v8u:target>3.0.15.34</v8u:target>
+    </v8u:update>
+    <v8u:update configuration="ЗарплатаИУправлениеПерсоналом">
+        <v8u:vendor>Фирма "1С"</v8u:vendor>
+        <v8u:file>1c/HRM/3_0_15_39/1cv8.zip</v8u:file>
+        <v8u:size>22 239 239</v8u:size>
+        <v8u:version>3.0.15.39</v8u:version>
+        <v8u:target>3.0.14.24</v8u:target>
+        <v8u:target>3.0.14.27</v8u:target>
+        <v8u:target>3.0.14.29</v8u:target>
+        <v8u:target>3.0.14.30</v8u:target>
+        <v8u:target>3.0.15.27</v8u:target>
+        <v8u:target>3.0.15.34</v8u:target>
+        <v8u:target>3.0.15.37</v8u:target>
+    </v8u:update>
+    <v8u:update configuration="ЗарплатаИУправлениеПерсоналом">
+        <v8u:vendor>Фирма "1С"</v8u:vendor>
+        <v8u:file>1c/HRM/3_0_16_32/1cv8.zip</v8u:file>
+        <v8u:size>22 086 151</v8u:size>
+        <v8u:version>3.0.16.32</v8u:version>
+        <v8u:target>3.0.15.34</v8u:target>
+        <v8u:target>3.0.15.37</v8u:target>
+        <v8u:target>3.0.15.39</v8u:target>
+        <v8u:target>3.0.16.27</v8u:target>
+    </v8u:update>
+    <v8u:update configuration="ЗарплатаИУправлениеПерсоналом">
+        <v8u:vendor>Фирма "1С"</v8u:vendor>
+        <v8u:file>1c/HRM/3_0_17_24/1cv8.zip</v8u:file>
+        <v8u:size>25 253 823</v8u:size>
+        <v8u:version>3.0.17.24</v8u:version>
+        <v8u:target>3.0.16.32</v8u:target>
+        <v8u:target>3.0.17.15</v8u:target>
+    </v8u:update>
+    <v8u:update configuration="ЗарплатаИУправлениеПерсоналом">
+        <v8u:vendor>Фирма "1С"</v8u:vendor>
+        <v8u:file>1c/HRM/3_0_17_29/1cv8.zip</v8u:file>
+        <v8u:size>822 110</v8u:size>
+        <v8u:version>3.0.17.29</v8u:version>
+        <v8u:target>3.0.17.24</v8u:target>
+    </v8u:update>
+    <v8u:update configuration="ЗарплатаИУправлениеПерсоналом">
+        <v8u:vendor>Фирма "1С"</v8u:vendor>
+        <v8u:file>1c/HRM/3_0_17_31/1cv8.zip</v8u:file>
+        <v8u:size>822 300</v8u:size>
+        <v8u:version>3.0.17.31</v8u:version>
+        <v8u:target>3.0.17.24</v8u:target>
+        <v8u:target>3.0.17.29</v8u:target>
+    </v8u:update>
+    <v8u:update configuration="ЗарплатаИУправлениеПерсоналом">
+        <v8u:vendor>Фирма "1С"</v8u:vendor>
+        <v8u:file>1c/HRM/3_0_17_34/1cv8.zip</v8u:file>
+        <v8u:size>1 505 474</v8u:size>
+        <v8u:version>3.0.17.34</v8u:version>
+        <v8u:target>3.0.17.24</v8u:target>
+        <v8u:target>3.0.17.29</v8u:target>
+        <v8u:target>3.0.17.31</v8u:target>
+    </v8u:update>
+    <v8u:update configuration="ЗарплатаИУправлениеПерсоналом">
+        <v8u:vendor>Фирма "1С"</v8u:vendor>
+        <v8u:file>1c/HRM/3_0_18_48/1cv8.zip</v8u:file>
+        <v8u:size>34 124 439</v8u:size>
+        <v8u:version>3.0.18.48</v8u:version>
+        <v8u:target>3.0.17.34</v8u:target>
+        <v8u:target>3.0.18.41</v8u:target>
+    </v8u:update>
+    <v8u:update configuration="ЗарплатаИУправлениеПерсоналом">
+        <v8u:vendor>Фирма "1С"</v8u:vendor>
+        <v8u:file>1c/HRM/3_0_18_53/1cv8.zip</v8u:file>
+        <v8u:size>2 165 421</v8u:size>
+        <v8u:version>3.0.18.53</v8u:version>
+        <v8u:target>3.0.18.48</v8u:target>
+    </v8u:update>
+    <v8u:update configuration="ЗарплатаИУправлениеПерсоналом">
+        <v8u:vendor>Фирма "1С"</v8u:vendor>
+        <v8u:file>1c/HRM/3_0_18_63/1cv8.zip</v8u:file>
+        <v8u:size>5 041 231</v8u:size>
+        <v8u:version>3.0.18.63</v8u:version>
+        <v8u:target>3.0.18.48</v8u:target>
+        <v8u:target>3.0.18.53</v8u:target>
+    </v8u:update>
+    <v8u:update configuration="ЗарплатаИУправлениеПерсоналом">
+        <v8u:vendor>Фирма "1С"</v8u:vendor>
+        <v8u:file>1c/HRM/3_0_19_70/1cv8.zip</v8u:file>
+        <v8u:size>33 963 988</v8u:size>
+        <v8u:version platform="8.3.5.1119">3.0.19.70</v8u:version>
+        <v8u:target>3.0.18.63</v8u:target>
+        <v8u:target>3.0.19.55</v8u:target>
+        <v8u:target>3.0.19.61</v8u:target>
+    </v8u:update>
+    <v8u:update configuration="ЗарплатаИУправлениеПерсоналом">
+        <v8u:vendor>Фирма "1С"</v8u:vendor>
+        <v8u:file>1c/HRM/3_0_19_71/1cv8.zip</v8u:file>
+        <v8u:size>962 982</v8u:size>
+        <v8u:version platform="8.3.5.1119">3.0.19.71</v8u:version>
+        <v8u:target>3.0.19.70</v8u:target>
+    </v8u:update>
+    <v8u:update configuration="ЗарплатаИУправлениеПерсоналом">
+        <v8u:vendor>Фирма "1С"</v8u:vendor>
+        <v8u:file>1c/HRM/3_0_20_43/1cv8.zip</v8u:file>
+        <v8u:size>49 457 522</v8u:size>
+        <v8u:version platform="8.3.5.1119">3.0.20.43</v8u:version>
+        <v8u:target>3.0.19.71</v8u:target>
+        <v8u:target>3.0.20.33</v8u:target>
+        <v8u:target>3.0.20.40</v8u:target>
+    </v8u:update>
+    <v8u:update configuration="ЗарплатаИУправлениеПерсоналом">
+        <v8u:vendor>Фирма "1С"</v8u:vendor>
+        <v8u:file>1c/HRM/3_0_20_44/1cv8.zip</v8u:file>
+        <v8u:size>2 246 453</v8u:size>
+        <v8u:version platform="8.3.5.1119">3.0.20.44</v8u:version>
+        <v8u:target>3.0.20.43</v8u:target>
+    </v8u:update>
+    <v8u:update configuration="ЗарплатаИУправлениеПерсоналом">
+        <v8u:vendor>Фирма "1С"</v8u:vendor>
+        <v8u:file>1c/HRM/3_0_20_45/1cv8.zip</v8u:file>
+        <v8u:size>13 757 349</v8u:size>
+        <v8u:version platform="8.3.5.1119">3.0.20.45</v8u:version>
+        <v8u:target>3.0.20.43</v8u:target>
+        <v8u:target>3.0.20.44</v8u:target>
+    </v8u:update>
+    <v8u:update configuration="ЗарплатаИУправлениеПерсоналом">
+        <v8u:vendor>Фирма "1С"</v8u:vendor>
+        <v8u:file>1c/HRM/3_0_21_22/1cv8.zip</v8u:file>
+        <v8u:size>44 383 844</v8u:size>
+        <v8u:version platform="8.3.5.1383">3.0.21.22</v8u:version>
+        <v8u:target>3.0.20.45</v8u:target>
+        <v8u:target>3.0.21.13</v8u:target>
+        <v8u:target>3.0.21.15</v8u:target>
+    </v8u:update>
+    <v8u:update configuration="ЗарплатаИУправлениеПерсоналом">
+        <v8u:vendor>Фирма "1С"</v8u:vendor>
+        <v8u:file>1c/HRM/3_0_21_24/1cv8.zip</v8u:file>
+        <v8u:size>4 830 720</v8u:size>
+        <v8u:version platform="8.3.5.1383">3.0.21.24</v8u:version>
+        <v8u:target>3.0.21.22</v8u:target>
+    </v8u:update>
+    <v8u:update configuration="ЗарплатаИУправлениеПерсоналом">
+        <v8u:vendor>Фирма "1С"</v8u:vendor>
+        <v8u:file>1c/HRM/3_0_22_178/1cv8.zip</v8u:file>
+        <v8u:size>32 965 526</v8u:size>
+        <v8u:version platform="8.3.5.1383">3.0.22.178</v8u:version>
+        <v8u:target>3.0.21.22</v8u:target>
+        <v8u:target>3.0.21.24</v8u:target>
+        <v8u:target>3.0.22.46</v8u:target>
+        <v8u:target>3.0.22.60</v8u:target>
+    </v8u:update>
+    <v8u:update configuration="ЗарплатаИУправлениеПерсоналом">
+        <v8u:vendor>Фирма "1С"</v8u:vendor>
+        <v8u:file>1c/HRM/3_0_22_188/1cv8.zip</v8u:file>
+        <v8u:size>4 719 826</v8u:size>
+        <v8u:version platform="8.3.5.1383">3.0.22.188</v8u:version>
+        <v8u:target>3.0.22.178</v8u:target>
+    </v8u:update>
+    <v8u:update configuration="ЗарплатаИУправлениеПерсоналом">
+        <v8u:vendor>Фирма "1С"</v8u:vendor>
+        <v8u:file>1c/HRM/3_0_22_199/1cv8.zip</v8u:file>
+        <v8u:size>33 433 258</v8u:size>
+        <v8u:version platform="8.3.5.1383">3.0.22.199</v8u:version>
+        <v8u:target>3.0.21.22</v8u:target>
+        <v8u:target>3.0.21.24</v8u:target>
+        <v8u:target>3.0.22.178</v8u:target>
+        <v8u:target>3.0.22.188</v8u:target>
+    </v8u:update>
+    <v8u:update configuration="ЗарплатаИУправлениеПерсоналом">
+        <v8u:vendor>Фирма "1С"</v8u:vendor>
+        <v8u:file>1c/HRM/3_0_22_204/1cv8.zip</v8u:file>
+        <v8u:size>35 740 736</v8u:size>
+        <v8u:version platform="8.3.5.1383">3.0.22.204</v8u:version>
+        <v8u:target>3.0.21.22</v8u:target>
+        <v8u:target>3.0.21.24</v8u:target>
+        <v8u:target>3.0.22.178</v8u:target>
+        <v8u:target>3.0.22.188</v8u:target>
+        <v8u:target>3.0.22.199</v8u:target>
+    </v8u:update>
+    <v8u:update configuration="ЗарплатаИУправлениеПерсоналом">
+        <v8u:vendor>Фирма "1С"</v8u:vendor>
+        <v8u:file>1c/HRM/3_0_22_216/1cv8.zip</v8u:file>
+        <v8u:size>4 481 381</v8u:size>
+        <v8u:version platform="8.3.5.1383">3.0.22.216</v8u:version>
+        <v8u:target>3.0.22.204</v8u:target>
+    </v8u:update>
+    <v8u:update configuration="ЗарплатаИУправлениеПерсоналом">
+        <v8u:vendor>Фирма "1С"</v8u:vendor>
+        <v8u:file>1c/HRM/3_0_22_219/1cv8.zip</v8u:file>
+        <v8u:size>16 408 574</v8u:size>
+        <v8u:version platform="8.3.5.1383">3.0.22.219</v8u:version>
+        <v8u:target>3.0.22.204</v8u:target>
+        <v8u:target>3.0.22.216</v8u:target>
+    </v8u:update>
+    <v8u:update configuration="ЗарплатаИУправлениеПерсоналом">
+        <v8u:vendor>Фирма "1С"</v8u:vendor>
+        <v8u:file>1c/HRM/3_0_22_223/1cv8.zip</v8u:file>
+        <v8u:size>79 884 613</v8u:size>
+        <v8u:version platform="8.3.5.1383">3.0.22.223</v8u:version>
+        <v8u:target>3.0.22.204</v8u:target>
+        <v8u:target>3.0.22.216</v8u:target>
+        <v8u:target>3.0.22.219</v8u:target>
+    </v8u:update>
+    <v8u:update configuration="ЗарплатаИУправлениеПерсоналом">
+        <v8u:vendor>Фирма "1С"</v8u:vendor>
+        <v8u:file>1c/HRM/3_0_22_225/1cv8.zip</v8u:file>
+        <v8u:size>79 932 657</v8u:size>
+        <v8u:version platform="8.3.5.1383">3.0.22.225</v8u:version>
+        <v8u:target>3.0.22.219</v8u:target>
+        <v8u:target>3.0.22.223</v8u:target>
+    </v8u:update>
+    <v8u:update configuration="ЗарплатаИУправлениеПерсоналом">
+        <v8u:vendor>Фирма "1С"</v8u:vendor>
+        <v8u:file>1c/HRM/3_0_22_230/1cv8.zip</v8u:file>
+        <v8u:size>80 724 436</v8u:size>
+        <v8u:version platform="8.3.5.1383">3.0.22.230</v8u:version>
+        <v8u:target>3.0.22.219</v8u:target>
+        <v8u:target>3.0.22.223</v8u:target>
+        <v8u:target>3.0.22.225</v8u:target>
+    </v8u:update>
+    <v8u:update configuration="ЗарплатаИУправлениеПерсоналом">
+        <v8u:vendor>Фирма "1С"</v8u:vendor>
+        <v8u:file>1c/HRM/3_0_22_233/1cv8.zip</v8u:file>
+        <v8u:size>3 283 644</v8u:size>
+        <v8u:version platform="8.3.5.1383">3.0.22.233</v8u:version>
+        <v8u:target>3.0.22.230</v8u:target>
+        <v8u:target>3.0.22.232</v8u:target>
+    </v8u:update>
+    <v8u:update configuration="ЗарплатаИУправлениеПерсоналом">
+        <v8u:vendor>Фирма "1С"</v8u:vendor>
+        <v8u:file>1c/HRM/3_0_23_120/1cv8.zip</v8u:file>
+        <v8u:size>40 472 004</v8u:size>
+        <v8u:version platform="8.3.6.2076">3.0.23.120</v8u:version>
+        <v8u:target>3.0.22.230</v8u:target>
+        <v8u:target>3.0.22.232</v8u:target>
+        <v8u:target>3.0.22.233</v8u:target>
+        <v8u:target>3.0.23.85</v8u:target>
+        <v8u:target>3.0.23.108</v8u:target>
+        <v8u:target>3.0.23.113</v8u:target>
+        <v8u:target>3.0.23.118</v8u:target>
+    </v8u:update>
+    <v8u:update configuration="ЗарплатаИУправлениеПерсоналом">
+        <v8u:vendor>Фирма "1С"</v8u:vendor>
+        <v8u:file>1c/HRM/3_0_23_126/1cv8.zip</v8u:file>
+        <v8u:size>4 781 036</v8u:size>
+        <v8u:version platform="8.3.6.2076">3.0.23.126</v8u:version>
+        <v8u:target>3.0.23.120</v8u:target>
+    </v8u:update>
+    <v8u:update configuration="ЗарплатаИУправлениеПерсоналом">
+        <v8u:vendor>Фирма "1С"</v8u:vendor>
+        <v8u:file>1c/HRM/3_0_23_128/1cv8.zip</v8u:file>
+        <v8u:size>16 104 123</v8u:size>
+        <v8u:version platform="8.3.6.2076">3.0.23.128</v8u:version>
+        <v8u:target>3.0.23.120</v8u:target>
+        <v8u:target>3.0.23.126</v8u:target>
+    </v8u:update>
+    <v8u:update configuration="ЗарплатаИУправлениеПерсоналом">
+        <v8u:vendor>Фирма "1С"</v8u:vendor>
+        <v8u:file>1c/HRM/3_0_23_132/1cv8.zip</v8u:file>
+        <v8u:size>16 675 795</v8u:size>
+        <v8u:version platform="8.3.6.2076">3.0.23.132</v8u:version>
+        <v8u:target>3.0.23.120</v8u:target>
+        <v8u:target>3.0.23.126</v8u:target>
+        <v8u:target>3.0.23.128</v8u:target>
+        <v8u:target>3.0.23.131</v8u:target>
+    </v8u:update>
+    <v8u:update configuration="ЗарплатаИУправлениеПерсоналом">
+        <v8u:vendor>Фирма "1С"</v8u:vendor>
+        <v8u:file>1c/HRM/3_0_23_139/1cv8.zip</v8u:file>
+        <v8u:size>18 822 972</v8u:size>
+        <v8u:version platform="8.3.6.2076">3.0.23.139</v8u:version>
+        <v8u:target>3.0.23.120</v8u:target>
+        <v8u:target>3.0.23.126</v8u:target>
+        <v8u:target>3.0.23.128</v8u:target>
+        <v8u:target>3.0.23.131</v8u:target>
+        <v8u:target>3.0.23.132</v8u:target>
+    </v8u:update>
+    <v8u:update configuration="ЗарплатаИУправлениеПерсоналом">
+        <v8u:vendor>Фирма "1С"</v8u:vendor>
+        <v8u:file>1c/HRM/3_0_23_142/1cv8.zip</v8u:file>
+        <v8u:size>8 065 465</v8u:size>
+        <v8u:version platform="8.3.6.2076">3.0.23.142</v8u:version>
+        <v8u:target>3.0.23.132</v8u:target>
+        <v8u:target>3.0.23.139</v8u:target>
+    </v8u:update>
+    <v8u:update configuration="ЗарплатаИУправлениеПерсоналом">
+        <v8u:vendor>Фирма "1С"</v8u:vendor>
+        <v8u:file>1c/HRM/3_0_23_143/1cv8.zip</v8u:file>
+        <v8u:size>8 140 965</v8u:size>
+        <v8u:version platform="8.3.6.2076">3.0.23.143</v8u:version>
+        <v8u:target>3.0.23.132</v8u:target>
+        <v8u:target>3.0.23.139</v8u:target>
+        <v8u:target>3.0.23.142</v8u:target>
+    </v8u:update>
+    <v8u:update configuration="ЗарплатаИУправлениеПерсоналом">
+        <v8u:vendor>Фирма "1С"</v8u:vendor>
+        <v8u:file>1c/HRM/3_0_23_148/1cv8.zip</v8u:file>
+        <v8u:size>17 681 067</v8u:size>
+        <v8u:version platform="8.3.6.2076">3.0.23.148</v8u:version>
+        <v8u:target>3.0.23.132</v8u:target>
+        <v8u:target>3.0.23.139</v8u:target>
+        <v8u:target>3.0.23.142</v8u:target>
+        <v8u:target>3.0.23.143</v8u:target>
+    </v8u:update>
+</v8u:updateList>
