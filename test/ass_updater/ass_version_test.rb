@@ -23,6 +23,8 @@ class AssVersionTest < Minitest::Test
   def test_initialize
     assert_raises(ArgumentError) {AssUpdater::AssVersion.new("blah")}
     assert_instance_of AssUpdater::AssVersion, AssUpdater::AssVersion.new("1.2.3.4")
+    assert_instance_of AssUpdater::AssVersion, AssUpdater::AssVersion.new(AssUpdater::AssVersion.new("1.2.3.4"))
+    assert AssUpdater::AssVersion.new.zerro?
   end
 
   def test_to_s

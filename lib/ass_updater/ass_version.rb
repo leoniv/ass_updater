@@ -4,7 +4,8 @@ class AssUpdater
     attr_reader :_1,:_2,:_3,:_4
 
     class << self
-      def zerro_version
+
+     def zerro_version
         self.new("0.0.0.0")
       end
 
@@ -19,7 +20,8 @@ class AssUpdater
       self.to_s == "0.0.0.0"
     end
 
-    def initialize(v)
+    def initialize(v=nil)
+      v ||= "0.0.0.0"
       raise ArgumentError.new "Invalid version string `#{v}'. Expect 'd.d.d.d' format" unless v.to_s =~ /^(\d)+\.(\d+)\.(\d+)\.(\d+)$/
       @_1 = $1.to_i
       @_2 = $2.to_i
@@ -55,7 +57,7 @@ class AssUpdater
     end
 
     def == other_version
-      (self <=> other_version) == 0
+        (self <=> other_version) == 0
     end
 
     def > other_version

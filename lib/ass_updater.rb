@@ -49,13 +49,24 @@ class AssUpdater
     @update_history
   end
 
-  def required_distrib_for_update(from_ver,to_ver)
-    from_ver ||= AssUpdater::AssVersion.zerro_version
-    to_ver ||= AssUpdater::AssVersion.new(curent_vesrsion)
-    if AssUpdater::AssVersion.new(from_versions) >= AssUpdater::AssVersion.new(to_ver)
-      []
+  def required_distrib_for_update(from_ver=nil,to_ver=nil)
+    from_ver = AssUpdater::AssVersion.new(from_ver)
+    to_ver = AssUpdater::AssVersion.new(to_ver ||= max_update_history_version)
+    if from_ver >= to_ver
+      raise ArgumentError.new "Version from_ver must be less than to_ver"
     end
-raise "FIXME"
+    r = []
+    c_ver = to_ver
+    begin
+      r << c_ver
+      di = get_distrib_info(c_ver)
+      targets = exclude_unknown_version(AssUpdater::AssVersion.convert_array(di["target"]))
+      if targets.index(from_ver)
+        break
+      end
+      c_ver = targets.min
+    end while targets.size > 0
+    r
   end
 
   #FIXME require doc
@@ -101,10 +112,36 @@ raise "FIXME"
     @http
   end
 
+  def min_update_history_version
+    all_update_history_versions.min
+  end
+
+  def max_update_history_version
+    all_update_history_versions.max
+  end
+
+  def all_update_history_versions
+    r = []
+    update_history["update"].each do |h|
+      r << h["version"]
+    end
+    AssUpdater::AssVersion.convert_array r
+  end
+
  private
 
+  def exclude_unknown_version(a)
+    a.map do |i|
+      if all_update_history_versions.index(AssUpdater::AssVersion.new(i))
+        i
+      else
+        nil
+      end
+    end.compact
+  end
+
   def conf_distribs_local_path(tmplt_root)
-    File.join(tmplt_root,*remote_distrib_file(0).split("/").shift(2))
+    File.join(tmplt_root,*remote_distrib_file("0.0.0.0").split("/").shift(2))
   end
 
   def distrib_local_path(v)
@@ -116,8 +153,14 @@ raise "FIXME"
   end
 
   def get_distrib_info(v)
+    if v.to_s == "0.0.0.0"
+      return get_distrib_info min_update_history_version
+    end
     update_history["update"].each do |h|
-      if h["version"] == v.to_s || v.to_s == "0"
+      if h["version"] == v.to_s
+        if h["target"].is_a? String
+          h["target"] = [] << h["target"]
+        end
         return h
       end
     end

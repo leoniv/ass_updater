@@ -48,11 +48,11 @@ class AssUpdaterTest < Minitest::Test
   end
 
   def test_min_update_history_version
-    assert_equal "3.0.8.46", updater.min_update_history_version.to_s
+    assert_equal "3.0.8.46", updater.send(:min_update_history_version).to_s
   end
 
   def test_max_update_history_version
-    assert_equal "3.0.23.132", updater.max_update_history_version.to_s
+    assert_equal "3.0.23.148", updater.send(:max_update_history_version).to_s
   end
 
   def test_constants
@@ -72,31 +72,27 @@ class AssUpdaterTest < Minitest::Test
 
   def test_required_distrib_for_update
     assert_equal updater.required_distrib_for_update("3.0.8.46","3.0.14.17") ,
-      ar_v(["3.0.14.17","3.0.13.38","3.0.12.40","3.0.11.41","3.0.11.39","3.0.10.33"] ),
+      ar_v(["3.0.14.17","3.0.13.38","3.0.12.38","3.0.11.41","3.0.11.36","3.0.10.32","3.0.9.28"] ),
       "Потребные обновления с версии 3.0.8.46 до версии 3.0.14.17"
     assert_equal updater.required_distrib_for_update("3.0.23.120") ,
-      ar_v(["3.0.23.148","3.0.23.139"] ),
-      "Потребные обновления с версии 3.0.23.139 до текущей"
+      ar_v(["3.0.23.148","3.0.23.132"] ),
+      "Потребные обновления с версии 3.0.23.120 до текущей"
     assert_equal updater.required_distrib_for_update(nil,"3.0.11.39") ,
-      ar_v(["3.0.11.39","3.0.10.33","3.0.9.28","3.0.8.46"] ),
+      ar_v(["3.0.11.39","3.0.10.32","3.0.9.28","3.0.8.46"] ),
       "Потребные обновления с 0 версии до версии 3.0.11.39"
     assert_raises (AssUpdater::Error) {updater.required_distrib_for_update("12.2.3.4","13.0.0.1")}
       #"Не известные версии вызывает исключение"
-    assert_raises (AssUpdater::Error) {updater.required_distrib_for_update("0.0.0.2","0.0.0.1")}
+    assert_raises (ArgumentError) {updater.required_distrib_for_update("0.0.0.2","0.0.0.1")}
       #"Попытка с болшей версии на меньшую"
    end
 
   def test_remote_distrib_file
     assert updater.send(:remote_distrib_file,"3.0.10.33") == "1c/HRM/3_0_10_33/1cv8.zip"
-    assert_raises ( AssUpdater::Error ) {updater.send(:remote_distrib_file, "0.0.0.0")}
+    assert_raises ( AssUpdater::Error ) {updater.send(:remote_distrib_file, "0.1.0.0")}
   end
 
   def test_distrib_local_path
     assert_equal  "1c/HRM/3_0_10_33",updater.send(:distrib_local_path,"3.0.10.33")
-  end
-
-  def ass_version(v)
-    AssUpdater::AssVersion.new(v)
   end
 
   def test_known_local_distribs
