@@ -50,24 +50,26 @@ class AssUpdater
   end
 
   def required_distrib_for_update(from_ver,to_ver)
-    raise "FIXME"
-    if AssUpdater.ass_version(from_versions) >= AssUpdater.ass_version(to_ver)
+    from_ver ||= AssUpdater::AssVersion.zerro_version
+    to_ver ||= AssUpdater::AssVersion.new(curent_vesrsion)
+    if AssUpdater::AssVersion.new(from_versions) >= AssUpdater::AssVersion.new(to_ver)
       []
     end
-
+raise "FIXME"
   end
 
   #FIXME require doc
   #Загружает и распаковывает дистрибутив новления в tmpl_root
-  def get_distrib(user,password,version,tmpl_root)
+  def get_distrib(user,password,version,tmplt_root)
     zip_f = Tempfile.new("1cv8_zip")
     begin
       zip_f.write(http.get("#{AssUpdater::UPDATEREPO_BASE}#{remote_distrib_file(version)}",user,password))
       zip_f.rewind
       Zip::File.open(zip_f.path) do |zf|
-        dest_dir = FileUtils.mkdir_p(File.join(tmplt_root,distrib_local_path))[0]
+        dest_dir = FileUtils.mkdir_p(File.join(tmplt_root,distrib_local_path(version)))[0]
         zf.each do |entry|
           dest_file = File.join(dest_dir,entry.name.encode("UTF-8","cp866"))
+          FileUtils.rm_r(dest_file) if File.exist?(dest_file)
           entry.extract(dest_file)
         end
       end
@@ -120,13 +122,6 @@ class AssUpdater
       end
     end
     raise AssUpdater::Error.new "Unckown version number `#{v}'"
-  end
-
-  def self.ass_version(v)
-    if v.class == AssUpdater::AssVersion
-      return v
-    end
-    AssUpdater::AssVersion.new(v)
   end
 
   def self.parse_updateinfo_txt(text)

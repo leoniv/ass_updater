@@ -6,6 +6,11 @@ class AssVersionTest < Minitest::Test
     AssUpdater::AssVersion.new(v)
   end
 
+  def test_array_sort
+    given = AssUpdater::AssVersion.convert_array(%w"2.3.4.1 3.3.2.1 1.2.3.4")
+    assert_equal AssUpdater::AssVersion.convert_array(%w"1.2.3.4 2.3.4.1 3.3.2.1"), given.sort
+  end
+
   def test_convert_array
     assert AssUpdater::AssVersion.convert_array(["1.2.3.4","4.5.6.7"]) ==
       [AssUpdater::AssVersion.new("1.2.3.4"),AssUpdater::AssVersion.new("4.5.6.7")]
