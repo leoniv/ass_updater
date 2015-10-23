@@ -7,11 +7,11 @@ Gem::Specification.new do |spec|
   spec.name          = "ass_updater"
   spec.version       = AssUpdater::VERSION
   spec.authors       = ["Leonid Vlasov"]
-  spec.email         = ["leo@asscode.ru"]
+  spec.email         = ["leoniv.vlasov@gmail.com"]
 
   spec.summary       = %q{Wrapper for 1C configuration updates service}
-  spec.description   = %q{Обертка для получения обновлений конфигураций 1С}
-  spec.homepage      = ""
+  spec.description   = spec.summary
+  spec.homepage      = "https://github.com/leoniv/ass_updater"
 
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
   spec.bindir        = "exe"
