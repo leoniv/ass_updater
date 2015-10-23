@@ -124,25 +124,10 @@ class AssUpdater
   # @return [String] path where distrib unzipped
   def get_distrib(user, password, version, tmplt_root)
     zip_f = Tempfile.new('1cv8_zip')
-    dest_dir = ''
     begin
-      zip_f.write(
-        http.get(
-          "#{AssUpdater::UPDATEREPO_BASE}#{remote_distrib_file(version)}",
-          user,
-          password
-        )
-      )
+      download_distrib(zip_f, user, password, version)
       zip_f.rewind
-      Zip::File.open(zip_f.path) do |zf|
-        dest_dir = FileUtils.mkdir_p(File.join(tmplt_root,
-                                               distrib_local_path(version)))[0]
-        zf.each do |entry|
-          dest_file = File.join(dest_dir, entry.name.encode('UTF-8', 'cp866'))
-          FileUtils.rm_r(dest_file) if File.exist?(dest_file)
-          entry.extract(dest_file)
-        end
-      end
+      dest_dir = unzip_all(zip_f, version, tmplt_root)
     ensure
       zip_f.close
       zip_f.unlink
@@ -202,6 +187,30 @@ class AssUpdater
   end
 
   private
+
+  def unzip_all(zip_f, version, tmplt_root)
+    dest_dir = ''
+    Zip::File.open(zip_f.path) do |zf|
+      dest_dir = FileUtils.mkdir_p(File.join(tmplt_root,
+                                             distrib_local_path(version)))[0]
+      zf.each do |entry|
+        dest_file = File.join(dest_dir, entry.name.encode('UTF-8', 'cp866'))
+        FileUtils.rm_r(dest_file) if File.exist?(dest_file)
+        entry.extract(dest_file)
+      end
+    end
+    dest_dir
+  end
+
+  def download_distrib(tmp_f, user, password, version)
+    tmp_f.write(
+      http.get(
+        "#{AssUpdater::UPDATEREPO_BASE}#{remote_distrib_file(version)}",
+        user,
+        password
+      )
+    )
+  end
 
   # Often {#update_history}[][:targets] containe incorrect version number
   #
