@@ -3,9 +3,13 @@ require 'zip'
 require 'nori'
 require 'ass_updater/version'
 
+#
+# AssUpdater - make easy download and install updates for 1C configuration from
+# service http://dounloads.v8.1c.ru. For read more about 1C configurations
+# visit site http://v8.1c.ru
+#
 class AssUpdater
   class Error < StandardError; end
-  class Runtime < AssUpdater::Error; end
   class HTTP; end
   class AssVersion; end
 
@@ -21,10 +25,22 @@ class AssUpdater
   UPDINFO_TXT = 'UpdInfo.txt'
   UPD11_ZIP   = 'v8upd11.zip'
 
-  attr_reader :conf_code_name, :conf_redaction, :platform_version, :update_info
+  # See arguments of {#initialize}
+  # @return [String]
+  attr_reader :conf_code_name, :conf_redaction, :platform_version
+  # Object for access to 1C services. It's public for configure http connection.
+  # @return [AssUpdater::HTTP]
   attr_accessor :http
 
-  # FIXME require doc
+  # @param conf_code_name [String] code name of configuration
+  # @param conf_redaction [String] redaction is major version nuber of
+  #  configuration. See {AssUpdater::AssVersion#redaction}
+  # @param platform_version [String] major version namber of target platform
+  #  1C:Enterprese.
+  # @yield self. It's good place for configure http object. See
+  #  {AssUpdater::HTTP}
+  # @raise [AssUpdater::Error] if given invalid <conf_redaction> or
+  #  <platform_version>
   def initialize(conf_code_name,
                  conf_redaction,
                  platform_version = PLATFORM_VERSIONS.keys.last
@@ -36,10 +52,18 @@ class AssUpdater
     yield self if block_given?
   end
 
+  # Return last configuration release version from file UpdInfo.txt.
+  # @note Service http://downloads.1c.ru often unavailable and it fail
+  #  on timeout. Don't worry and try again.
+  # @return [String]
   def curent_vesrsion
     update_info[:version]
   end
 
+  # Return info about last configuration release from file UpdInfo.txt
+  # @note Service http://downloads.1c.ru often unavailable and it fail
+  #  on timeout. Don't worry and try again.
+  # @return [Hash]
   def update_info
     @update_info ||= AssUpdater.parse_updateinfo_txt(
       AssUpdater.get_update_info_text(self)
@@ -47,6 +71,10 @@ class AssUpdater
     @update_info
   end
 
+  # Return updates history from v8upd11.xml
+  # @note Service http://downloads.1c.ru often unavailable and it fail
+  #  on timeout. Don't worry and try again.
+  # @return [Hash]
   def update_history
     @update_history ||= AssUpdater.parse_updatehistory_xml(
       AssUpdater.get_update_history_text(self)
@@ -54,6 +82,17 @@ class AssUpdater
     @update_history
   end
 
+  # Evaluate versions required for update configuration
+  # from version <from_ver> to version <to_ver>. Return array
+  # iclude <to_ver> and exclude <from_ver> If called whithout
+  # arguments return versions required for update from version
+  # '0.0.0.0' to last release.
+  # @param from_ver [String,AssUpdater::AssVersion] if nil from_ver set to
+  #  '0.0.0.0'
+  # @param to_ver [String,AssUpdater::AssVersion] if nill to_ver set to last
+  #  release
+  # @return [Array<AssUpdater::AssVersion>]
+  # @raise [ArgumentError] if <from_ver> more then <to_ver>
   def required_distrib_for_update(from_ver = nil, to_ver = nil)
     from_ver = AssUpdater::AssVersion.new(from_ver)
     to_ver = AssUpdater::AssVersion.new(to_ver || max_update_history_version)
@@ -73,10 +112,19 @@ class AssUpdater
     r
   end
 
-  # FIXME require doc
-  # Загружает и распаковывает дистрибутив новления в tmpl_root
+  # Download <version> distributive of configuration update and uzip into
+  # <tmplt_root>. Exists in <template_root> distrib will be overwritten.
+  # @note Require authorization.
+  # @note Service http://downloads.v8.1c.ru
+  #  often unavailable and it fail on timeout. Don't worry and try again.
+  # @param user [String] authorization user name
+  # @param password [String] authorization password
+  # @param version [String,AssUpdater::AssVersion] disrib version
+  # @param tmplt_root [String] path to 1C update templates
+  # @return [String] path where distrib unzipped
   def get_distrib(user, password, version, tmplt_root)
     zip_f = Tempfile.new('1cv8_zip')
+    dest_dir = ''
     begin
       zip_f.write(
         http.get(
@@ -99,14 +147,27 @@ class AssUpdater
       zip_f.close
       zip_f.unlink
     end
+    dest_dir
   end
 
+  # Dounload and unzip all versions from array <versions>. See {#get_distrib}
+  # @param user (see #get_distrib)
+  # @param password (see #get_distrib)
+  # @param versions [Array<String,AssUpdater::AssVersion>]
+  # @param tmplt_root (see #get_distrib)
+  # @return [Array] of pathes returned {#get_distrib}
   def get_distribs(user, password, versions, tmplt_root)
+    r = []
     versions.each do |version|
-      get_distrib(user, password, version, tmplt_root)
+      r << get_distrib(user, password, version, tmplt_root)
     end
+    r
   end
 
+  # Return all downloaded versions finded in 1C templates directory
+  # <tmplt_root>
+  # @param tmplt_root [String] path to 1C templates directory
+  # @return [Array<AssUpdater::AssVersion>]
   def known_local_distribs(tmplt_root)
     (Dir.entries(conf_distribs_local_path(tmplt_root)).map do |e|
       next if e == '.' || e == '..'
@@ -118,14 +179,20 @@ class AssUpdater
     end).compact
   end
 
+  # Returm min distrib version from {#update_history}
+  # @return [AssUpdater::AssVersion]
   def min_update_history_version
     all_update_history_versions.min
   end
 
+  # Return max distrib version from {#update_history}
+  # @return [AssUpdater::AssVersion]
   def max_update_history_version
     all_update_history_versions.max
   end
 
+  # Return all versions from {#update_history}
+  # @return [Array<AssUpdater::AssVersion>]
   def all_update_history_versions
     r = []
     update_history['update'].each do |h|
@@ -136,6 +203,8 @@ class AssUpdater
 
   private
 
+  # Often {#update_history}[][:targets] containe incorrect version number
+  #
   def exclude_unknown_version(a)
     a.map do |i|
       i if all_update_history_versions.index(AssUpdater::AssVersion.new(i))

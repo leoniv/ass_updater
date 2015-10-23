@@ -100,15 +100,17 @@ class AssUpdaterTest < Minitest::Test
   end
 
   def test_get_distrib
-    updater.get_distrib('', '', '3.0.8.46', @tmp_tmplt_root)
-    assert_equal Dir.glob(File.join(@tmp_tmplt_root, '1c', 'HRM', '3_0_8_46', '*')).map{|i| File.basename(i).force_encoding('UTF-8')} , @_1cv8zip_content
-    assert_equal Dir.glob(File.join(@tmp_tmplt_root, '1c', 'HRM', '3_0_8_46', '*')).map{|i| File.basename(i).force_encoding('UTF-8')} , @_1cv8zip_content
+    assert_equal File.join(@tmp_tmplt_root,'1c/HRM/3_0_8_46'), updater.get_distrib('', '', '3.0.8.46', @tmp_tmplt_root)
+    assert_equal @_1cv8zip_content, Dir.glob(File.join(@tmp_tmplt_root, '1c', 'HRM', '3_0_8_46', '*')).map{|i| File.basename(i).force_encoding('UTF-8')}
+    assert_equal @_1cv8zip_content, Dir.glob(File.join(@tmp_tmplt_root, '1c', 'HRM', '3_0_8_46', '*')).map{|i| File.basename(i).force_encoding('UTF-8')}
   end
 
   def test_get_distribs
-    updater.get_distribs('', '', ar_v(['3.0.9.28', '3.0.10.33']), @tmp_tmplt_root)
-    assert_equal Dir.glob(File.join(@tmp_tmplt_root, '1c', 'HRM', '3_0_9_28', '*')).map{|i| File.basename(i).force_encoding('UTF-8')} , @_1cv8zip_content
-    assert_equal Dir.glob(File.join(@tmp_tmplt_root, '1c', 'HRM', '3_0_10_33', '*')).map{|i| File.basename(i).force_encoding('UTF-8')}  , @_1cv8zip_content
+    expected = [File.join(@tmp_tmplt_root,'1c/HRM/3_0_9_28'),
+                File.join(@tmp_tmplt_root,'1c/HRM/3_0_10_33')]
+    assert_equal expected, updater.get_distribs('', '', ar_v(['3.0.9.28', '3.0.10.33']), @tmp_tmplt_root)
+    assert_equal @_1cv8zip_content, Dir.glob(File.join(@tmp_tmplt_root, '1c', 'HRM', '3_0_9_28', '*')).map{|i| File.basename(i).force_encoding('UTF-8')}
+    assert_equal @_1cv8zip_content, Dir.glob(File.join(@tmp_tmplt_root, '1c', 'HRM', '3_0_10_33', '*')).map{|i| File.basename(i).force_encoding('UTF-8')}
   end
 
   def test_curent_version
