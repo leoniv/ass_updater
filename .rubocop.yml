@@ -1,0 +1,16 @@
+AllCops:
+  Exclude:
+    - 'test/**/*'
+    - 'tmp/**/*'
+    - 'bin/**/*'
+    - 'Rakefile'
+    - '*.gemspec'
+Metrics/AbcSize:
+  Max: 25 # TODO Lower to default 15
+
+Metrics/MethodLength:
+  CountComments: false
+  Max: 20 # TODO Lower to default 10
+
+Metrics/ClassLength:
+  Max: 200 # TODO Lower to defult
