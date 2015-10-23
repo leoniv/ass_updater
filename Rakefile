@@ -8,3 +8,9 @@ Rake::TestTask.new(:test) do |t|
 end
 
 task :default => :test
+
+desc 'Run tests with simplecov'
+task :test_with_simplecov do
+  ENV["SIMPLECOV"] = 'YES'
+  Rake::Task["test"].invoke
+end
