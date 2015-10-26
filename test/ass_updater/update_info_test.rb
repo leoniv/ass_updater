@@ -5,7 +5,7 @@ class UpdateInfoTest < Minitest::Test
 
   def setup
     init_fixt
-    @update_info = AssUpdater::UpdateInfo.new(ass_updater_mock('HRM','30','83',self))
+    @update_info = AssUpdater::UpdateInfo.new(ass_updater_stub('HRM','30','83',self))
   end
 
   def test_const
@@ -17,7 +17,7 @@ class UpdateInfoTest < Minitest::Test
     expected = { version: '3.0.23.148',
                  from_versions: %w(3.0.23.132 3.0.23.139 3.0.23.142 3.0.23.143),
                  update_date: '22.09.2015'}
-    assert_equal expected, @update_info.send(:parse)
+    assert_equal expected, @update_info.send(:raw)
   end
 
   def test_version
@@ -30,10 +30,13 @@ class UpdateInfoTest < Minitest::Test
 
   # TODO extract to update_info_service_test.rb
   def test_get_updateinfo_path
+    @update_service = Class.new(AssUpdater::UpdateInfoService) do
+                        def parse
+                          "parsed data"
+                        end
+                      end.new(ass_updater_mock('ccn','cred','pl_ver'))
     assert_equal "#{AssUpdater::UPDATEINFO_BASE}/ccn/cred/pl_ver/",
-      AssUpdater::UpdateInfoService.new(
-        ass_updater_mock('ccn','cred','pl_ver')
-        ).send(:updateinfo_path)
+      @update_service.send(:updateinfo_path)
   end
 
 end

@@ -20,6 +20,10 @@ module AssUpdaterFixt
     mock
   end
 
+  def ass_updater_stub(conf_code_name,conf_redaction,platform_version,http=nil)
+    AssUpdaterStab.new(conf_code_name,conf_redaction,platform_version,http)
+  end
+
   def init_fixt
     @fixtures = File.expand_path('../fixtures', __FILE__)
     @fixt_updinfo_txt = File.join(@fixtures, 'UpdInfo.txt')
@@ -46,5 +50,30 @@ module AssUpdaterFixt
      else
        raise "Unckown uri #{uri}"
     end
+  end
+end
+
+class AssUpdaterStab
+  def initialize(conf_code_name,conf_redaction,platform_version,http)
+    @http = http
+    @conf_code_name = conf_code_name
+    @conf_redaction = conf_redaction
+    @platform_version = platform_version
+  end
+
+  def http
+    @http
+  end
+
+  def conf_code_name
+    @conf_code_name
+  end
+
+  def conf_redaction
+    @conf_redaction
+  end
+
+  def platform_version
+    @platform_version
   end
 end

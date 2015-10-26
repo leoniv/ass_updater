@@ -14,16 +14,25 @@ class AssUpdater
   class AssVersion; end
 
   # TODO extract to update_info_service_test.rb
-  # @absract
-  class UpdateInfoService
+  # @abstract
+  # @note Service http://downloads.1c.ru often unavailable and initialize fail
+  #  on timeout. Don't worry and try again.
+   class UpdateInfoService
     attr_reader :ass_updater
 
     # @param ass_updater [AssUpdater] owner objec
     def initialize(ass_updater)
       @ass_updater = ass_updater
+      raw
     end
 
     private
+
+    # Return raw update_info data
+    # @return [Hash]
+    def raw
+      @raw ||= parse
+    end
 
     def updateinfo_base
       AssUpdater::UPDATEINFO_BASE
@@ -33,11 +42,17 @@ class AssUpdater
       "#{updateinfo_base}/#{ass_updater.conf_code_name}/"\
         "#{ass_updater.conf_redaction}/#{ass_updater.platform_version}/"
     end
+
+    def parse
+      raise "Abstract method called"
+    end
+
   end
 
   require 'ass_updater/ass_version'
   require 'ass_updater/http'
   require 'ass_updater/update_info'
+  require 'ass_updater/update_history'
 
   PLATFORM_VERSIONS = { :"8.2" => '82', :"8.3" => '83' }
   KNOWN_CONF_CODENAME = { HRM: 'Зарплата и управление персоналом',
@@ -75,23 +90,17 @@ class AssUpdater
   end
 
   # Return info about last configuration release from file UpdInfo.txt
-  # @note Service http://downloads.1c.ru often unavailable and it fail
-  #  on timeout. Don't worry and try again.
+  # @note (see AssUpdater::UpdateInfo)
   # @return [AssUpdater::UpdateInfo]
   def update_info
     @update_info ||= AssUpdater::UpdateInfo.new(self)
-    @update_info
   end
 
   # Return updates history from v8upd11.xml
-  # @note Service http://downloads.1c.ru often unavailable and it fail
-  #  on timeout. Don't worry and try again.
+  # @note (see AssUpdater::UpdateHistory)
   # @return [Hash]
   def update_history
-    @update_history ||= AssUpdater.parse_updatehistory_xml(
-      AssUpdater.get_update_history_text(self)
-    )
-    @update_history
+    @update_history ||= AssUpdater::UpdateHistory.new(self)
   end
 
   # Evaluate versions required for update configuration
@@ -176,28 +185,6 @@ class AssUpdater
     end).compact
   end
 
-  # Returm min distrib version from {#update_history}
-  # @return [AssUpdater::AssVersion]
-  def min_update_history_version
-    all_update_history_versions.min
-  end
-
-  # Return max distrib version from {#update_history}
-  # @return [AssUpdater::AssVersion]
-  def max_update_history_version
-    all_update_history_versions.max
-  end
-
-  # Return all versions from {#update_history}
-  # @return [Array<AssUpdater::AssVersion>]
-  def all_update_history_versions
-    r = []
-    update_history['update'].each do |h|
-      r << h['version']
-    end
-    AssUpdater::AssVersion.convert_array r
-  end
-
   private
 
   def unzip_all(zip_f, version, tmplt_root)
@@ -228,7 +215,7 @@ class AssUpdater
   #
   def exclude_unknown_version(a)
     a.map do |i|
-      i if all_update_history_versions.index(AssUpdater::AssVersion.new(i))
+      i if update_history.all_versions.index(AssUpdater::AssVersion.new(i))
     end.compact
   end
 
@@ -242,44 +229,6 @@ class AssUpdater
 
   def remote_distrib_file(v)
     get_distrib_info(v)['file']
-  end
-
-  def get_distrib_info(v)
-    return get_distrib_info min_update_history_version if v.to_s == '0.0.0.0'
-    update_history['update'].each do |h|
-      next if h['version'] != v.to_s
-      h['target'] = [] << h['target'] if h['target'].is_a? String
-      return h
-    end
-    fail AssUpdater::Error, "Unckown version number `#{v}'"
-  end
-
-  def self.parse_updatehistory_xml(xml)
-    p = Nori.new(parser: :rexml, strip_namespaces: true)
-    r = p.parse(xml)['updateList']
-    r['update'] = [] << r['update'] if r['update'].is_a? Hash
-    r
-  end
-
-  def self.get_update_history_text(inst)
-    zip_f = Tempfile.new('upd11_zip')
-    begin
-      zip_f.write(inst.http.get("#{get_updateinfo_path(inst)}/#{UPD11_ZIP}"))
-      zip_f.rewind
-      xml = ''
-      Zip::File.open(zip_f.path) do |zf|
-        upd11_zip = zf.glob('v8cscdsc.xml').first
-        unless upd11_zip
-          fail AssUpdater::Error,
-               "File `v8cscdsc.xml' not fount in zip `#{UPD11_ZIP}'"
-        end
-        xml = upd11_zip.get_input_stream.read
-      end
-    ensure
-      zip_f.close
-      zip_f.unlink
-    end
-    xml.force_encoding 'UTF-8'
   end
 
   def self.valid_platform_version(v)

@@ -20,14 +20,6 @@ class AssUpdaterTest < Minitest::Test
     end
   end
 
-  def test_min_update_history_version
-    assert_equal '3.0.8.46', updater.send(:min_update_history_version).to_s
-  end
-
-  def test_max_update_history_version
-    assert_equal '3.0.23.148', updater.send(:max_update_history_version).to_s
-  end
-
   def test_constants
     assert_equal AssUpdater::PLATFORM_VERSIONS, {:"8.2"=>'82', :"8.3"=>'83'}
     assert_equal AssUpdater::UPDATEREPO_BASE , 'http://downloads.v8.1c.ru/tmplts/'
@@ -102,28 +94,6 @@ class AssUpdaterTest < Minitest::Test
 
   def test_const_updateinfo_base
     assert AssUpdater::UPDATEINFO_BASE == 'http://downloads.1c.ru/ipp/ITSREPV/V8Update/Configs/'
-  end
-
-  def test_get_update_info_text
-    http = Minitest::Mock.new
-    http.expect(:get, File.new(@fixt_updinfo_txt).read, ["#{AssUpdater.get_updateinfo_path(upd_mock)}/#{AssUpdater::UPDINFO_TXT}"])
-    inst = nil
-    assert File.new(@fixt_updinfo_txt).read == AssUpdater.get_update_info_text(inst)
-  end
-
-  def test_get_update_history_text
-    http = Minitest::Mock.new
-    http.expect(:get, File.new(@fixt_v8upd11_zip).read, ["#{AssUpdater.get_updateinfo_path(upd_mock)}/#{AssUpdater::UPD11_ZIP}"])
-    inst = upd_mock(http)
-    ht = AssUpdater.get_update_history_text(inst)
-    assert File.new(@fixt_v8upd11_xml).read == ht
-  end
-
-  def test_parse_updatehistory_xml
-    up_h = AssUpdater.parse_updatehistory_xml(File.read(@fixt_v8upd11_xml))
-    assert_instance_of Hash, up_h
-    assert ! up_h.has_key?('updateList')
-    assert up_h.has_key? 'update'
   end
 
 end
