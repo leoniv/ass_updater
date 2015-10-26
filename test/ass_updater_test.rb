@@ -2,39 +2,12 @@ require 'test_helper'
 require 'minitest/mock'
 
 class AssUpdaterTest < Minitest::Test
-
-  def upd_mock(http=nil)
-    mock = Minitest::Mock.new
-    mock.expect(:conf_code_name, 'ccn')
-    mock.expect(:conf_redaction, 'cred')
-    mock.expect(:platform_version, 'pl_ver')
-    mock.expect(:http, http)
-    mock
-  end
+  include AssUpdaterFixt
 
   def setup
-    @fixtures = File.expand_path('../fixtures', __FILE__)
-    @fixt_updinfo_txt = File.join(@fixtures, 'UpdInfo.txt')
-    @fixt_v8upd11_zip = File.join(@fixtures, 'v8upd11.zip')
-    @fixt_v8upd11_xml = File.join(@fixtures, 'v8upd11.xml')
-    @fixt_tmplt_root = File.join(@fixtures, 'tmplts')
-    @fixt_distribs_root = File.join(@fixtures, 'distribs')
+    init_fixt
     @tmp_tmplt_root = Dir.mktmpdir('tmplt_root')
-    @_1cv8zip_content = ['1cv8.cfu', '1cv8.mft', '1cv8upd.htm', 'UpdInfo.txt', 'Зарплата и Управление Персоналом. Версия 3.0.11. Новое в версии.htm']
     AssUpdater.send(:public_class_method, *AssUpdater.private_methods)
-  end
-
-   def get(uri, *args)
-    case uri
-     when /.*UpdInfo\.txt/i
-       File.new(@fixt_updinfo_txt).read
-     when /.*v8upd11\.zip/i
-       File.read(@fixt_v8upd11_zip)
-     when /#{AssUpdater::UPDATEREPO_BASE}(.*\.zip)/i
-       File.read File.join(@fixt_distribs_root, $1)
-     else
-       raise "Unckown uri #{uri}"
-    end
   end
 
   def teardown
@@ -59,7 +32,6 @@ class AssUpdaterTest < Minitest::Test
     assert_equal AssUpdater::PLATFORM_VERSIONS, {:"8.2"=>'82', :"8.3"=>'83'}
     assert_equal AssUpdater::UPDATEREPO_BASE , 'http://downloads.v8.1c.ru/tmplts/'
     assert_equal AssUpdater::UPDATEINFO_BASE , 'http://downloads.1c.ru/ipp/ITSREPV/V8Update/Configs/'
-    assert_equal AssUpdater::UPDINFO_TXT , 'UpdInfo.txt'
     assert_equal AssUpdater::UPD11_ZIP  , 'v8upd11.zip'
     assert_equal AssUpdater::KNOWN_CONF_CODENAME , {HRM:'Зарплата и управление персоналом',
                         Accounting:'Бухгалтерия предприятия',
@@ -113,10 +85,6 @@ class AssUpdaterTest < Minitest::Test
     assert_equal @_1cv8zip_content, Dir.glob(File.join(@tmp_tmplt_root, '1c', 'HRM', '3_0_10_33', '*')).map{|i| File.basename(i).force_encoding('UTF-8')}
   end
 
-  def test_curent_version
-    assert updater.curent_vesrsion == '3.0.23.148'
-  end
-
   def test_that_it_has_a_version_number
     refute_nil ::AssUpdater::VERSION
   end
@@ -136,14 +104,10 @@ class AssUpdaterTest < Minitest::Test
     assert AssUpdater::UPDATEINFO_BASE == 'http://downloads.1c.ru/ipp/ITSREPV/V8Update/Configs/'
   end
 
-  def test_get_updateinfo_path
-   assert AssUpdater.get_updateinfo_path(upd_mock) == "#{AssUpdater::UPDATEINFO_BASE}/ccn/cred/pl_ver/"
-  end
-
   def test_get_update_info_text
     http = Minitest::Mock.new
     http.expect(:get, File.new(@fixt_updinfo_txt).read, ["#{AssUpdater.get_updateinfo_path(upd_mock)}/#{AssUpdater::UPDINFO_TXT}"])
-    inst = upd_mock(http)
+    inst = nil
     assert File.new(@fixt_updinfo_txt).read == AssUpdater.get_update_info_text(inst)
   end
 
@@ -153,14 +117,6 @@ class AssUpdaterTest < Minitest::Test
     inst = upd_mock(http)
     ht = AssUpdater.get_update_history_text(inst)
     assert File.new(@fixt_v8upd11_xml).read == ht
-  end
-
-  def test_parse_updateinfo_txt
-   assert_equal({ version: '3.0.23.148',
-                  from_versions: %w(3.0.23.132 3.0.23.139 3.0.23.142 3.0.23.143),
-                  update_date: '22.09.2015'},
-     AssUpdater.parse_updateinfo_txt(File.new(@fixt_updinfo_txt).read)
-     )
   end
 
   def test_parse_updatehistory_xml

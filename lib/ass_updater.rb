@@ -13,8 +13,31 @@ class AssUpdater
   class HTTP; end
   class AssVersion; end
 
+  # TODO extract to update_info_service_test.rb
+  # @absract
+  class UpdateInfoService
+    attr_reader :ass_updater
+
+    # @param ass_updater [AssUpdater] owner objec
+    def initialize(ass_updater)
+      @ass_updater = ass_updater
+    end
+
+    private
+
+    def updateinfo_base
+      AssUpdater::UPDATEINFO_BASE
+    end
+
+    def updateinfo_path
+      "#{updateinfo_base}/#{ass_updater.conf_code_name}/"\
+        "#{ass_updater.conf_redaction}/#{ass_updater.platform_version}/"
+    end
+  end
+
   require 'ass_updater/ass_version'
   require 'ass_updater/http'
+  require 'ass_updater/update_info'
 
   PLATFORM_VERSIONS = { :"8.2" => '82', :"8.3" => '83' }
   KNOWN_CONF_CODENAME = { HRM: 'Зарплата и управление персоналом',
@@ -22,7 +45,6 @@ class AssUpdater
                           AccountingKz: 'Бухгалтерия для Казахстана' }
   UPDATEREPO_BASE = 'http://downloads.v8.1c.ru/tmplts/'
   UPDATEINFO_BASE = 'http://downloads.1c.ru/ipp/ITSREPV/V8Update/Configs/'
-  UPDINFO_TXT = 'UpdInfo.txt'
   UPD11_ZIP   = 'v8upd11.zip'
 
   # See arguments of {#initialize}
@@ -52,22 +74,12 @@ class AssUpdater
     yield self if block_given?
   end
 
-  # Return last configuration release version from file UpdInfo.txt.
-  # @note Service http://downloads.1c.ru often unavailable and it fail
-  #  on timeout. Don't worry and try again.
-  # @return [String]
-  def curent_vesrsion
-    update_info[:version]
-  end
-
   # Return info about last configuration release from file UpdInfo.txt
   # @note Service http://downloads.1c.ru often unavailable and it fail
   #  on timeout. Don't worry and try again.
-  # @return [Hash]
+  # @return [AssUpdater::UpdateInfo]
   def update_info
-    @update_info ||= AssUpdater.parse_updateinfo_txt(
-      AssUpdater.get_update_info_text(self)
-    )
+    @update_info ||= AssUpdater::UpdateInfo.new(self)
     @update_info
   end
 
@@ -242,25 +254,11 @@ class AssUpdater
     fail AssUpdater::Error, "Unckown version number `#{v}'"
   end
 
-  def self.parse_updateinfo_txt(text)
-    text =~ /Version=([\d\.]*)(\s*)FromVersions=[;]?([\d\.\;]*)(\s*)UpdateDate=([\d\.]*)/im
-    r = { version: Regexp.last_match(1),
-          from_versions: [],
-          update_date: Regexp.last_match(5)
-    }
-    r[:from_versions] = Regexp.last_match(3).split(';') if Regexp.last_match(3)
-    r
-  end
-
   def self.parse_updatehistory_xml(xml)
     p = Nori.new(parser: :rexml, strip_namespaces: true)
     r = p.parse(xml)['updateList']
     r['update'] = [] << r['update'] if r['update'].is_a? Hash
     r
-  end
-
-  def self.get_update_info_text(inst)
-    inst.http.get("#{get_updateinfo_path(inst)}/#{UPDINFO_TXT}")
   end
 
   def self.get_update_history_text(inst)
@@ -282,11 +280,6 @@ class AssUpdater
       zip_f.unlink
     end
     xml.force_encoding 'UTF-8'
-  end
-
-  def self.get_updateinfo_path(inst)
-    "#{UPDATEINFO_BASE}/#{inst.conf_code_name}/"\
-      "#{inst.conf_redaction}/#{inst.platform_version}/"
   end
 
   def self.valid_platform_version(v)
