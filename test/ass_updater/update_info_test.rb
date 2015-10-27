@@ -21,7 +21,8 @@ class UpdateInfoTest < Minitest::Test
   end
 
   def test_version
-    assert_equal "3.0.23.148", @update_info.version
+    assert_instance_of AssUpdater::AssVersion, @update_info.version
+    assert_equal "3.0.23.148", @update_info.version.to_s
   end
 
   def test_square_brackets

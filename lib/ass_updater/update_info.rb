@@ -8,9 +8,9 @@ class AssUpdater
     UPDINFO_TXT = 'UpdInfo.txt'
 
     # Return last configuration release version from file UpdInfo.txt.
-    # @return [String]
+    # @return [AssUpdater::AssVersion]
     def version
-      self[:version]
+      AssUpdater::AssVersion.new(self[:version])
     end
 
     # Return value for key from UpdInfo.txt
