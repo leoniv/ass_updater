@@ -149,10 +149,12 @@ class AssUpdater
   # @param versions [Array<String,AssUpdater::AssVersion>]
   # @param tmplt_root (see #get_update)
   # @return [Array<AssUpdater::UpdateDistrib>] returned {#get_update}
-  def get_updates(user, password, versions, tmplt_root)
+  # @yield [AssUpdater::UpdateDistrib] block colled for each getted distrib
+  def get_updates(user, password, versions, tmplt_root, &block)
     r = []
     versions.each do |version|
       r << get_update(user, password, version, tmplt_root)
+      yield r.last if block_given?
     end
     r
   end

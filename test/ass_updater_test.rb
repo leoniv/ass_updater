@@ -82,13 +82,18 @@ class AssUpdaterTest < Minitest::Test
   def test_get_updates
     updater = get_update_mocked_updater
     versions = ar_v(['3.0.9.28', '3.0.10.33'])
-    mocks = updater.get_updates('user', 'password', versions , @tmp_tmplt_root)
-    assert_equal 2,mocks.size
-    mocks.each_with_index do |mock,index|
-      assert_equal versions[index], mock.version
+    block_colled = 0
+    mocks = updater.get_updates('user',
+                                'password',
+                                versions ,
+                                @tmp_tmplt_root) do |mock|
+      block_colled += 1
+      assert_equal versions[block_colled-1], mock.version
       assert_equal @tmp_tmplt_root, mock.tmplt_root
       mock.verify
     end
+    assert_equal 2, block_colled
+    assert_equal 2, mocks.size
   end
 
   def test_that_it_has_a_version_number
