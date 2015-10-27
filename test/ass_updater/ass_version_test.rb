@@ -52,16 +52,6 @@ class AssVersionTest < Minitest::Test
     assert v_new(more) <= v_new(more)
   end
 
-  def test_distrib_path
-    tmpl_root = 'ass_tmpl_root'
-    vendor = '1c'
-    conf_code_name = 'hrm'
-    assert_equal(
-      v_new('1.2.3.4').distrib_path(tmpl_root, vendor, conf_code_name),
-      File.join(tmpl_root, vendor, conf_code_name, '1_2_3_4')
-    )
-  end
-
   def test_redaction
     assert_equal v_new('2.5.4.55').redaction, '2.5'
   end
