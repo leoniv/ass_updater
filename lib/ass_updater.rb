@@ -53,6 +53,7 @@ class AssUpdater
   require 'ass_updater/http'
   require 'ass_updater/update_info'
   require 'ass_updater/update_history'
+  require 'ass_updater/update_distrib'
 
   PLATFORM_VERSIONS = { :"8.2" => '82', :"8.3" => '83' }
   KNOWN_CONF_CODENAME = { HRM: 'Зарплата и управление персоналом',
@@ -114,9 +115,9 @@ class AssUpdater
   #  release
   # @return [Array<AssUpdater::AssVersion>]
   # @raise [ArgumentError] if <from_ver> more then <to_ver>
-  def required_distrib_for_update(from_ver = nil, to_ver = nil)
+  def required_versions_for_update(from_ver = nil, to_ver = nil)
     from_ver = AssUpdater::AssVersion.new(from_ver)
-    to_ver = AssUpdater::AssVersion.new(to_ver || max_update_history_version)
+    to_ver = AssUpdater::AssVersion.new(to_ver || update_history.max_version)
     if from_ver >= to_ver
       fail ArgumentError, 'from_ver must be less than to_ver'
     end
@@ -124,53 +125,40 @@ class AssUpdater
     c_ver = to_ver
     loop do
       r << c_ver
-      targets = exclude_unknown_version(
-        AssUpdater::AssVersion.convert_array(get_distrib_info(c_ver)['target'])
-      )
+      targets = update_history.target c_ver
       break if targets.size == 0 || targets.index(from_ver)
       c_ver = targets.min
     end
     r
   end
 
-  # Download <version> distributive of configuration update and uzip into
-  # <tmplt_root>. Exists in <template_root> distrib will be overwritten.
-  # @note Require authorization.
-  # @note Service http://downloads.v8.1c.ru
-  #  often unavailable and it fail on timeout. Don't worry and try again.
-  # @param user [String] authorization user name
-  # @param password [String] authorization password
-  # @param version [String,AssUpdater::AssVersion] disrib version
-  # @param tmplt_root [String] path to 1C update templates
-  # @return [String] path where distrib unzipped
-  def get_distrib(user, password, version, tmplt_root)
-    zip_f = Tempfile.new('1cv8_zip')
-    begin
-      download_distrib(zip_f, user, password, version)
-      zip_f.rewind
-      dest_dir = unzip_all(zip_f, version, tmplt_root)
-    ensure
-      zip_f.close
-      zip_f.unlink
-    end
-    dest_dir
+  # (see AssUpdater::UpdateDistrib)
+  # @note (see AssUpdater::UpdateDistrib#get)
+  # @param user (see AssUpdater::UpdateDistrib#get)
+  # @param password (see AssUpdater::UpdateDistrib#get)
+  # @param version (see AssUpdater::UpdateDistrib#initialize)
+  # @param tmplt_root (see AssUpdater::UpdateDistrib#initialize)
+  # @return (see AssUpdater::UpdateDistrib#get)
+  def get_update(user, password, version, tmplt_root)
+    distrib = new_update_distrib(version,tmplt_root)
+    distrib.get(user,password)
   end
 
-  # Dounload and unzip all versions from array <versions>. See {#get_distrib}
-  # @param user (see #get_distrib)
-  # @param password (see #get_distrib)
+  # Get updates included in array <versions>. See {#get_update}
+  # @param user (see #get_update)
+  # @param password (see #get_update)
   # @param versions [Array<String,AssUpdater::AssVersion>]
-  # @param tmplt_root (see #get_distrib)
-  # @return [Array] of pathes returned {#get_distrib}
-  def get_distribs(user, password, versions, tmplt_root)
+  # @param tmplt_root (see #get_update)
+  # @return [Array<AssUpdater::UpdateDistrib>] returned {#get_update}
+  def get_updates(user, password, versions, tmplt_root)
     r = []
     versions.each do |version|
-      r << get_distrib(user, password, version, tmplt_root)
+      r << get_update(user, password, version, tmplt_root)
     end
     r
   end
 
-  # Return all downloaded versions finded in 1C templates directory
+  # Return versions all downloaded updates finded in 1C templates directory
   # <tmplt_root>
   # @param tmplt_root [String] path to 1C templates directory
   # @return [Array<AssUpdater::AssVersion>]
@@ -187,48 +175,13 @@ class AssUpdater
 
   private
 
-  def unzip_all(zip_f, version, tmplt_root)
-    dest_dir = ''
-    Zip::File.open(zip_f.path) do |zf|
-      dest_dir = FileUtils.mkdir_p(File.join(tmplt_root,
-                                             distrib_local_path(version)))[0]
-      zf.each do |entry|
-        dest_file = File.join(dest_dir, entry.name.encode('UTF-8', 'cp866'))
-        FileUtils.rm_r(dest_file) if File.exist?(dest_file)
-        entry.extract(dest_file)
-      end
-    end
-    dest_dir
-  end
-
-  def download_distrib(tmp_f, user, password, version)
-    tmp_f.write(
-      http.get(
-        "#{AssUpdater::UPDATEREPO_BASE}#{remote_distrib_file(version)}",
-        user,
-        password
-      )
-    )
-  end
-
-  # Often {#update_history}[][:targets] containe incorrect version number
-  #
-  def exclude_unknown_version(a)
-    a.map do |i|
-      i if update_history.all_versions.index(AssUpdater::AssVersion.new(i))
-    end.compact
+  # For moking object [UpdateDistrib] and isolate test
+  def new_update_distrib(version,tmplt_root)
+    AssUpdater::UpdateDistrib.new(version,tmplt_root,self)
   end
 
   def conf_distribs_local_path(tmplt_root)
-    File.join(tmplt_root, *remote_distrib_file('0.0.0.0').split('/').shift(2))
-  end
-
-  def distrib_local_path(v)
-    File.dirname(remote_distrib_file(v))
-  end
-
-  def remote_distrib_file(v)
-    get_distrib_info(v)['file']
+    File.join(tmplt_root, '1c', conf_code_name)
   end
 
   def self.valid_platform_version(v)

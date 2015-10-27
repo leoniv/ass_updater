@@ -44,8 +44,27 @@ class AssUpdater
       fail AssUpdater::Error, "Unkown version number `#{version}'"
     end
 
+    # Return array of target versions for update to version <version>
+    # @param version [String,AssUpdater::AssVersion]
+    # @return [Array<AssUpdater::AssVersion>]
+    # @note (see #ex
+    def target(version)
+      exclude_unknown_version(
+        AssUpdater::AssVersion.convert_array self[version]['target']
+      )
+    end
+
 
   private
+
+    # @note Often ['target'] containe incorrect version number
+    #  not fonded in {#all_versions}.
+    #
+    def exclude_unknown_version(a)
+      a.map do |i|
+        i if all_versions.index(i)
+      end.compact
+    end
 
     def parse
       r = Nori.new(parser: :rexml,

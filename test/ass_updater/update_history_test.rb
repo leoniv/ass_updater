@@ -34,6 +34,10 @@ class UpdateHistryTest < Minitest::Test
     assert_equal '3.0.9.28', actual.sort[1].to_s
   end
 
+  def test_target
+    actual = AssUpdater::AssVersion.convert_array(['3.0.9.28']),
+      @update_history.target('3.0.10.32')
+  end
 
   # TODO extract to update_info_servise_test.rb
   def test_raw

@@ -20,8 +20,8 @@ module AssUpdaterFixt
     mock
   end
 
-  def ass_updater_stub(conf_code_name,conf_redaction,platform_version,http=nil)
-    AssUpdaterStab.new(conf_code_name,conf_redaction,platform_version,http)
+  def ass_updater_stub(conf_code_name,conf_redaction,platform_version,http=nil,version_info={})
+    AssUpdaterStab.new(conf_code_name,conf_redaction,platform_version,http,version_info)
   end
 
   def init_fixt
@@ -31,12 +31,6 @@ module AssUpdaterFixt
     @fixt_v8upd11_xml = File.join(@fixtures, 'v8upd11.xml')
     @fixt_tmplt_root = File.join(@fixtures, 'tmplts')
     @fixt_distribs_root = File.join(@fixtures, 'distribs')
-    @_1cv8zip_content = ['1cv8.cfu',
-                         '1cv8.mft',
-                         '1cv8upd.htm',
-                         'UpdInfo.txt',
-                         'Зарплата и Управление Персоналом."\
-                         " Версия 3.0.11. Новое в версии.htm']
   end
 
   def get(uri, *args)
@@ -54,11 +48,24 @@ module AssUpdaterFixt
 end
 
 class AssUpdaterStab
-  def initialize(conf_code_name,conf_redaction,platform_version,http)
+  class UpdateHistoryStub
+    def initialize(version_info)
+      @version_info = version_info
+    end
+    def [](*args)
+      @version_info
+    end
+  end
+  def initialize(conf_code_name, conf_redaction, platform_version, http, version_info={})
     @http = http
     @conf_code_name = conf_code_name
     @conf_redaction = conf_redaction
     @platform_version = platform_version
+    @update_history = AssUpdaterStab::UpdateHistoryStub.new(version_info)
+  end
+
+  def update_history
+    @update_history
   end
 
   def http
