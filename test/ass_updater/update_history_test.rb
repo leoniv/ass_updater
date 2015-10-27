@@ -6,6 +6,7 @@ class UpdateHistryTest < Minitest::Test
   def setup
     init_fixt
     @update_history = AssUpdater::UpdateHistory.new(ass_updater_stub('HRM','30','83',self))
+    @fixt_zerro_zip = File.join(@fixtures,'zerro.zip')
   end
 
   def test_parse
@@ -13,6 +14,10 @@ class UpdateHistryTest < Minitest::Test
     assert_instance_of Hash, up_h
     assert ! up_h.key?('updateList')
     assert up_h.key? 'update'
+  end
+
+  def test_unzip_fail
+    assert_raises(AssUpdater::Error) { @update_history.send(:unzip, File.new(@fixt_zerro_zip)) }
   end
 
   def test_get

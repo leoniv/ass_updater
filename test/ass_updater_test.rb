@@ -12,8 +12,8 @@ class AssUpdaterTest < Minitest::Test
   def updater
     AssUpdater.new('HRM', '3.0') do |n|
       n.http = self
-    end
-  end
+     end
+   end
 
   def test_constants
     assert_equal AssUpdater::PLATFORM_VERSIONS, {:"8.2"=>'82', :"8.3"=>'83'}
@@ -27,6 +27,10 @@ class AssUpdaterTest < Minitest::Test
 
   def ar_v(a)
     AssUpdater::AssVersion.convert_array(a)
+  end
+
+  def test_update_info
+    assert_instance_of AssUpdater::UpdateInfo, updater.update_info
   end
 
   def test_required_versions_for_update
