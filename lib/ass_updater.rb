@@ -13,11 +13,11 @@ class AssUpdater
   class HTTP; end
   class AssVersion; end
 
-  # TODO extract to update_info_service_test.rb
+  # TODO Extract to update_info_service_test.rb
   # @abstract
   # @note Service http://downloads.1c.ru often unavailable and initialize fail
   #  on timeout. Don't worry and try again.
-   class UpdateInfoService
+  class UpdateInfoService
     attr_reader :ass_updater
 
     # @param ass_updater [AssUpdater] owner objec
@@ -44,9 +44,8 @@ class AssUpdater
     end
 
     def parse
-      raise "Abstract method called"
+      fail 'Abstract method called'
     end
-
   end
 
   require 'ass_updater/ass_version'
@@ -140,8 +139,8 @@ class AssUpdater
   # @param tmplt_root (see AssUpdater::UpdateDistrib#initialize)
   # @return (see AssUpdater::UpdateDistrib#get)
   def get_update(user, password, version, tmplt_root)
-    distrib = new_update_distrib(version,tmplt_root)
-    distrib.get(user,password)
+    distrib = new_update_distrib(version, tmplt_root)
+    distrib.get(user, password)
   end
 
   # Get updates included in array <versions>. See {#get_update}
@@ -176,8 +175,8 @@ class AssUpdater
   private
 
   # For moking object [UpdateDistrib] and isolate test
-  def new_update_distrib(version,tmplt_root)
-    AssUpdater::UpdateDistrib.new(version,tmplt_root,self)
+  def new_update_distrib(version, tmplt_root)
+    AssUpdater::UpdateDistrib.new(version, tmplt_root, self)
   end
 
   def conf_distribs_local_path(tmplt_root)

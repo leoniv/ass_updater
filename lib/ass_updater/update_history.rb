@@ -1,13 +1,11 @@
 #-- incoding utf-8
 
-
 class AssUpdater
   #
   # Handle fo updtade history from v8upd11.xml
   # @note (see AssUpdater::UpdateInfoService)
   #
   class UpdateHistory < AssUpdater::UpdateInfoService
-
     # Returm min distrib version from update history
     # @return [AssUpdater::AssVersion]
     def min_version
@@ -54,8 +52,7 @@ class AssUpdater
       )
     end
 
-
-  private
+    private
 
     # @note Often ['target'] containe incorrect version number
     #  not fonded in {#all_versions}.
@@ -78,20 +75,25 @@ class AssUpdater
       begin
         zip_f.write(ass_updater.http.get("#{updateinfo_path}/#{UPD11_ZIP}"))
         zip_f.rewind
-        xml = ''
-        Zip::File.open(zip_f.path) do |zf|
-          upd11_zip = zf.glob('v8cscdsc.xml').first
-          unless upd11_zip
-            fail AssUpdater::Error,
-                 "File `v8cscdsc.xml' not fount in zip `#{UPD11_ZIP}'"
-          end
-          xml = upd11_zip.get_input_stream.read
-        end
+        xml = unzip(zip_f)
       ensure
         zip_f.close
         zip_f.unlink
       end
       xml.force_encoding 'UTF-8'
+    end
+
+    def unzip(zip_f)
+      xml = ''
+      Zip::File.open(zip_f.path) do |zf|
+        upd11_zip = zf.glob('v8cscdsc.xml').first
+        unless upd11_zip
+          fail AssUpdater::Error,
+               "File `v8cscdsc.xml' not fount in zip `#{UPD11_ZIP}'"
+        end
+        xml = upd11_zip.get_input_stream.read
+      end
+      xml
     end
   end
 end

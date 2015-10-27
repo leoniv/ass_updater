@@ -6,11 +6,8 @@ AllCops:
     - 'Rakefile'
     - '*.gemspec'
 Metrics/AbcSize:
-  Max: 25 # TODO Lower to default 15
+  Max: 16 # TODO Lower to default 15
 
 Metrics/MethodLength:
   CountComments: false
-  Max: 20 # TODO Lower to default 10
-
-Metrics/ClassLength:
-  Max: 200 # TODO Lower to defult
+  Max: 15 # TODO Lower to default 10

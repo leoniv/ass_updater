@@ -19,15 +19,16 @@ class AssUpdater
       raw[key]
     end
 
-  private
+    private
 
-   def parse
-      get =~ /Version=([\d\.]*)(\s*)FromVersions=[;]?([\d\.\;]*)(\s*)UpdateDate=([\d\.]*)/im
+    def parse
+      get =~ /Version=([\d\.]*)(\s*)FromVersions=\
+[;]?([\d\.\;]*)(\s*)UpdateDate=([\d\.]*)/im
       r = { version: Regexp.last_match(1),
             from_versions: [],
             update_date: Regexp.last_match(5)
-      }
-      r[:from_versions] = Regexp.last_match(3).split(';') if Regexp.last_match(3)
+           }
+      r[:from_versions] = Regexp.last_match(3).split(';') if Regexp.last_match 3
       r
     end
 

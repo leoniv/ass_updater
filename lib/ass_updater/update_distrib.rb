@@ -8,7 +8,7 @@ class AssUpdater
     # @param ass_updater [AssUpdater] owner object
     # @param version [String AssUpdater::AssVersion]
     # @param tmplt_root [String] path to 1C update templates
-    def initialize(version,tmplt_root,ass_updater)
+    def initialize(version, tmplt_root, ass_updater)
       @ass_updater = ass_updater
       @version = AssUpdater::AssVersion.new(version)
       @version_info = @ass_updater.update_history[@version]
@@ -39,18 +39,20 @@ class AssUpdater
 
     # Return path to distributive zip file on http server
     def file
-      File.join(AssUpdater::UPDATEREPO_BASE,version_info['file'])
+      File.join(AssUpdater::UPDATEREPO_BASE, version_info['file'])
     end
 
     # Return local path where distributive installed
     def local_path
-      File.join(tmplt_root,File.dirname(version_info['file']))
+      File.join(tmplt_root, File.dirname(version_info['file']))
     end
 
     # Return files included in distributive. Files find in {#local_path}
     # @param pattern (see Dir::glob)
-    def file_list(pattern='*')
-      Dir.glob(File.join(local_path,pattern)).map{|f| f.force_encoding 'UTF-8'}
+    def file_list(pattern = '*')
+      Dir.glob(File.join(local_path, pattern)).map do |f|
+        f.force_encoding 'UTF-8'
+      end
     end
 
     private
@@ -69,12 +71,11 @@ class AssUpdater
     end
 
     def download_distrib(tmp_f, user, password)
-      tmp_f.write(
-        ass_updater.http.get(file,
-          user,
-          password
-        )
-      )
+      tmp_f.write(ass_updater.http.get(file,
+                                       user,
+                                       password
+                                      )
+                 )
     end
   end
 end
