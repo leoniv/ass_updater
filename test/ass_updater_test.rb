@@ -16,7 +16,7 @@ class AssUpdaterTest < Minitest::Test
    end
 
   def test_constants
-    assert_equal AssUpdater::PLATFORM_VERSIONS, {:"8.2"=>'82', :"8.3"=>'83'}
+    assert_equal AssUpdater::PLATFORM_VERSIONS, {:"8.2"=>'8.2', :"8.3"=>'8.3'}
     assert_equal AssUpdater::UPDATEREPO_BASE , 'http://downloads.v8.1c.ru/tmplts/'
     assert_equal AssUpdater::UPDATEINFO_BASE , 'http://downloads.1c.ru/ipp/ITSREPV/V8Update/Configs/'
     assert_equal AssUpdater::UPD11_ZIP  , 'v8upd11.zip'
@@ -50,7 +50,7 @@ class AssUpdaterTest < Minitest::Test
    end
 
   def test_known_local_distribs
-    assert_equal updater.known_local_distribs(@fixt_tmplt_root) , ar_v( ['1.1.1.1', '2.2.2.2', '3.3.3.3'] )
+    assert_equal updater.known_local_distribs(@fixt_tmplt_root) , ar_v( ['3.0.1.1', '3.0.2.2', '3.0.3.3'] )
   end
 
   def test_new_update_distrib
@@ -101,13 +101,13 @@ class AssUpdaterTest < Minitest::Test
   end
 
   def test_valid_platform_version
-    assert '82' == AssUpdater.valid_platform_version('8.2')
-    assert '83' == AssUpdater.valid_platform_version('8.3')
+    assert '8.2' == AssUpdater.valid_platform_version('8.2')
+    assert '8.3' == AssUpdater.valid_platform_version('8.3')
     assert_raises(AssUpdater::Error) {AssUpdater.valid_platform_version 'blah'}
   end
 
   def test_valid_redaction
-    assert '30' == AssUpdater.valid_redaction('3.0')
+    assert '3.0' == AssUpdater.valid_redaction('3.0')
     assert_raises(AssUpdater::Error){AssUpdater.valid_redaction('blah')}
   end
 

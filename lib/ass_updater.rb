@@ -40,7 +40,7 @@ class AssUpdater
 
     def updateinfo_path
       "#{updateinfo_base}/#{ass_updater.conf_code_name}/"\
-        "#{ass_updater.conf_redaction}/#{ass_updater.platform_version}/"
+        "#{ass_updater.conf_redaction.sub(".","")}/#{ass_updater.platform_version.sub(".","")}/"
     end
 
     def parse
@@ -54,7 +54,7 @@ class AssUpdater
   require 'ass_updater/update_history'
   require 'ass_updater/update_distrib'
 
-  PLATFORM_VERSIONS = { :"8.2" => '82', :"8.3" => '83' }
+  PLATFORM_VERSIONS = { :"8.2" => '8.2', :"8.3" => '8.3' }
   KNOWN_CONF_CODENAME = { HRM: 'Зарплата и управление персоналом',
                           Accounting: 'Бухгалтерия предприятия',
                           AccountingKz: 'Бухгалтерия для Казахстана' }
@@ -167,19 +167,23 @@ class AssUpdater
     (Dir.entries(conf_distribs_local_path(tmplt_root)).map do |e|
       next if e == '.' || e == '..'
       begin
-        AssUpdater::AssVersion.new(e.split('_').join('.'))
+        v = AssUpdater::AssVersion.new(e.split('_').join('.'))
+        v if v.redaction == conf_redaction
       rescue ArgumentError
         nil
       end
     end).compact
   end
 
-  private
-
-  # For moking object [UpdateDistrib] and isolate test
+  # Wrapper return UpdateDistrib object
+  # @param version (see #get_update)
+  # @param tmplt_root (see #get_update)
+  # @return [AssUpdater::UpdateDistrib]
   def new_update_distrib(version, tmplt_root)
     AssUpdater::UpdateDistrib.new(version, tmplt_root, self)
   end
+
+  private
 
   def conf_distribs_local_path(tmplt_root)
     File.join(tmplt_root, '1c', conf_code_name)
@@ -196,6 +200,6 @@ class AssUpdater
 
   def self.valid_redaction(r)
     fail AssUpdater::Error, "Invalid redaction #{r}" unless r =~ /\d\.\d/
-    r.sub('.', '')
+    r
   end
 end
