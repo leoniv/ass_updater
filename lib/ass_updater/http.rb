@@ -1,10 +1,25 @@
 require 'net/http'
 
 class AssUpdater
+  # HTTP access to 1C services.
+  # @note 1C servise often unavaileble and {#get} fail on timeout
   class HTTP
+    # Value of useragent controled 1C web server and server may return 403 error
     USER_AGENT_DEFAULT = '1C+Enterprise/8.2'
-    attr_accessor :user_agent, :proxy_options, :open_timeout, :read_timeout
+    # (see USER_AGENT_DEFAULT)
+    # @return [String]
+    attr_accessor :user_agent
+    # see {#initialize} param
+    # @return [Hash]
+    attr_accessor :proxy_options
+    # see Net::HTTP#open_timeout
+    # @note (see AssUpdater::HTTP)
+    attr_accessor :open_timeout
+    # see Net::HTTP#read_timeout
+    # @note (see AssUpdater::HTTP)
+    attr_accessor :read_timeout
 
+    # @param proxy_options [Hash] options for proxy server
     def initialize(proxy_options = {})
       self.open_timeout = 30 # fucking 1C
       self.user_agent = USER_AGENT_DEFAULT
@@ -15,6 +30,10 @@ class AssUpdater
       yeld self if block_given?
     end
 
+    # @note (see AssUpdater::HTTP)
+    # @param uri_str [String]
+    # @param user_name [String] user 1C sevice
+    # @param password [String]
     def get(uri_str, user_name = nil, password = nil)
       response = _http(URI(uri_str)).request(_get(user_name,
                                                   password,
