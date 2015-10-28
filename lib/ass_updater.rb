@@ -8,47 +8,10 @@ require 'ass_updater/version'
 # visit site http://v8.1c.ru
 class AssUpdater
   class Error < StandardError; end
-  class HTTP; end
-  class AssVersion; end
-
-  # TODO Extract to update_info_service_test.rb
-  # @abstract
-  # @note Service http://downloads.1c.ru often unavailable and initialize fail
-  #  on timeout. Don't worry and try again.
-  class UpdateInfoService
-    attr_reader :ass_updater
-
-    # @param ass_updater [AssUpdater] owner objec
-    def initialize(ass_updater)
-      @ass_updater = ass_updater
-      raw
-    end
-
-    private
-
-    # Return raw update_info data
-    # @return [Hash]
-    def raw
-      @raw ||= parse
-    end
-
-    def updateinfo_base
-      AssUpdater::UPDATEINFO_BASE
-    end
-
-    def updateinfo_path
-      "#{updateinfo_base}/#{ass_updater.conf_code_name}/"\
-        "#{ass_updater.conf_redaction.sub('.', '')}/"\
-        "#{ass_updater.platform_version.sub('.', '')}/"
-    end
-
-    def parse
-      fail 'Abstract method called'
-    end
-  end
 
   require 'ass_updater/ass_version'
   require 'ass_updater/http'
+  require 'ass_updater/update_info_service'
   require 'ass_updater/update_info'
   require 'ass_updater/update_history'
   require 'ass_updater/update_distrib'

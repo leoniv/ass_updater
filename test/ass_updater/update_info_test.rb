@@ -28,16 +28,4 @@ class UpdateInfoTest < Minitest::Test
   def test_square_brackets
     assert_equal "22.09.2015", @update_info[:update_date]
   end
-
-  # TODO extract to update_info_service_test.rb
-  def test_get_updateinfo_path
-    @update_service = Class.new(AssUpdater::UpdateInfoService) do
-                        def parse
-                          "parsed data"
-                        end
-                      end.new(ass_updater_mock('ccn','cred','pl_ver'))
-    assert_equal "#{AssUpdater::UPDATEINFO_BASE}/ccn/cred/pl_ver/",
-      @update_service.send(:updateinfo_path)
-  end
-
 end

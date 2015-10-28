@@ -44,16 +44,6 @@ class UpdateHistryTest < Minitest::Test
       @update_history.target('3.0.10.32')
   end
 
-  # TODO extract to update_info_servise_test.rb
-  def test_raw
-    @update_service = Class.new(AssUpdater::UpdateInfoService) do
-                        def parse
-                          "parsed data"
-                        end
-                      end.new(self)
-    assert_equal "parsed data", @update_service.send(:raw)
-  end
-
   def test_square_brackets
     expected = {'vendor' => 'Фирма "1С"',
                 'file' => '1c/HRM/3_0_10_32/1cv8.zip',
