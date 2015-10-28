@@ -3,11 +3,9 @@ require 'zip'
 require 'nori'
 require 'ass_updater/version'
 
-#
 # AssUpdater - make easy download and install updates for 1C configuration from
 # service http://dounloads.v8.1c.ru. For read more about 1C configurations
 # visit site http://v8.1c.ru
-#
 class AssUpdater
   class Error < StandardError; end
   class HTTP; end
@@ -40,7 +38,8 @@ class AssUpdater
 
     def updateinfo_path
       "#{updateinfo_base}/#{ass_updater.conf_code_name}/"\
-        "#{ass_updater.conf_redaction.sub(".","")}/#{ass_updater.platform_version.sub(".","")}/"
+        "#{ass_updater.conf_redaction.sub('.', '')}/"\
+        "#{ass_updater.platform_version.sub('.', '')}/"
     end
 
     def parse
@@ -149,8 +148,8 @@ class AssUpdater
   # @param versions [Array<String,AssUpdater::AssVersion>]
   # @param tmplt_root (see #get_update)
   # @return [Array<AssUpdater::UpdateDistrib>] returned {#get_update}
-  # @yield [AssUpdater::UpdateDistrib] block colled for each getted distrib
-  def get_updates(user, password, versions, tmplt_root, &block)
+  # @yield [AssUpdater::UpdateDistrib] for each getted distrib
+  def get_updates(user, password, versions, tmplt_root)
     r = []
     versions.each do |version|
       r << get_update(user, password, version, tmplt_root)
@@ -159,11 +158,11 @@ class AssUpdater
     r
   end
 
-  # Return versions all downloaded updates finded in 1C templates directory
+  # Return versions all instaled updates finded in 1C templates directory
   # <tmplt_root>
-  # @param tmplt_root [String] path to 1C templates directory
+  # @param tmplt_root (see #get_update)
   # @return [Array<AssUpdater::AssVersion>]
-  def known_local_distribs(tmplt_root)
+  def instaled_versions(tmplt_root)
     (Dir.entries(conf_distribs_local_path(tmplt_root)).map do |e|
       next if e == '.' || e == '..'
       begin
@@ -173,6 +172,20 @@ class AssUpdater
         nil
       end
     end).compact
+  end
+
+  # Return all instaled updates findet in 1C templates directory
+  # @note return distirbs present in {#update_history} only
+  # @param tmplt_root (see #get_update)
+  # @return [Array<AssUpdater::UpdateDistrib>]
+  def instaled_distribs(tmplt_root)
+    instaled_versions(tmplt_root).map do |v|
+      begin
+        new_update_distrib(v, tmplt_root)
+      rescue AssUpdater::Error
+        nil
+      end
+    end.compact
   end
 
   # Wrapper return UpdateDistrib object

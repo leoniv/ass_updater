@@ -49,12 +49,41 @@ class AssUpdaterTest < Minitest::Test
       #'Попытка с болшей версии на меньшую'
    end
 
-  def test_known_local_distribs
-    assert_equal updater.known_local_distribs(@fixt_tmplt_root) , ar_v( ['3.0.1.1', '3.0.2.2', '3.0.3.3'] )
+  def test_instaled_versions
+    assert_equal updater.instaled_versions(@fixt_tmplt_root) , ar_v( ['3.0.1.1', '3.0.2.2', '3.0.3.3'] )
   end
 
   def test_new_update_distrib
     assert_instance_of AssUpdater::UpdateDistrib, updater.send(:new_update_distrib, '3.0.8.46',@tmp_tmplt_root)
+  end
+
+  def test_instaled_distribs
+    updater = Class.new(AssUpdater) do
+      def initialize; end
+      def update_history
+        instaled_versions('').shift 2
+      end
+      def instaled_versions(tmplt_root)
+        ['3.0.1.1','3.0.2.2','0.0.0.0']
+      end
+      def new_update_distrib(v,tmplt_root)
+        if update_history.index(v)
+          mock = Minitest::Mock.new
+          mock.expect(:version,v)
+          mock.expect(:tmplt_root,tmplt_root)
+          mock
+        else
+          fail AssUpdater::Error
+        end
+      end
+    end.new
+    actual = updater.instaled_distribs('tmplt_root')
+    assert_equal 2, actual.size
+    actual.each_with_index do |mock,index|
+      assert_equal updater.update_history[index], mock.version
+      assert_equal 'tmplt_root', mock.tmplt_root
+      mock.verify
+    end
   end
 
   def get_update_mocked_updater
