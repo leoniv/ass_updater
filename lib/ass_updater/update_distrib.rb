@@ -66,16 +66,15 @@ class AssUpdater
     end
 
     def unzip_all(zip_f)
-      dest_dir = ''
       Zip::File.open(zip_f.path) do |zf|
-        dest_dir = FileUtils.mkdir_p(local_path)[0]
         zf.each do |entry|
-          dest_file = File.join(dest_dir, entry.name.encode('UTF-8', 'cp866'))
+          dest_file = File.join(local_path, entry.name.encode('UTF-8', 'cp866'))
+          FileUtils.mkdir_p(File.dirname(dest_file))
           FileUtils.rm_r(dest_file) if File.exist?(dest_file)
           entry.extract(dest_file)
         end
       end
-      dest_dir
+      local_path
     end
 
     def download_distrib(tmp_f, user, password)
