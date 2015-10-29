@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/leoniv/ass_updater.png)]
+[![Build Status](https://travis-ci.org/leoniv/ass_updater.png)](https://travis-ci.org/leoniv/ass_updater)
 [![Inline docs](http://inch-ci.org/github/leoniv/ass_updater.png)](http://inch-ci.org/github/leoniv/ass_updater)
 [![Code Climate](https://codeclimate.com/github/leoniv/ass_updater/badges/gpa.png)](https://codeclimate.com/github/leoniv/ass_updater)
 
