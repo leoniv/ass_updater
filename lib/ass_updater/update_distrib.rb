@@ -39,12 +39,12 @@ class AssUpdater
 
     # Return path to distributive zip file on http server
     def file
-      File.join(AssUpdater::UPDATEREPO_BASE, version_info['file'])
+      File.join(AssUpdater::UPDATEREPO_BASE, fix_path(version_info_file))
     end
 
     # Return local path where distributive installed
     def local_path
-      File.join(tmplt_root, File.dirname(version_info['file']))
+      File.join(tmplt_root, File.dirname(version_info_file))
     end
 
     # Return files included in distributive. Files find in {#local_path}
@@ -56,6 +56,14 @@ class AssUpdater
     end
 
     private
+
+    def version_info_file
+      fix_path version_info['file']
+    end
+
+    def fix_path(path)
+      path.gsub '\\','/'
+    end
 
     def unzip_all(zip_f)
       dest_dir = ''

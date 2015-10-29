@@ -83,4 +83,10 @@ class UpdateDistribTest < Minitest::Test
       @update_distrib.target
   end
 
+  def test_fix_path
+    path = '1c\\Accounting\\2_0_15_8\\1cv8.zip'
+    fix_path = '1c/Accounting/2_0_15_8/1cv8.zip'
+    assert_equal fix_path, @update_distrib.send(:fix_path, path)
+  end
+
 end
