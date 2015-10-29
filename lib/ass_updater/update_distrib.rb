@@ -62,7 +62,7 @@ class AssUpdater
     end
 
     def fix_path(path)
-      path.gsub '\\','/'
+      path.tr '\\', '/'
     end
 
     def unzip_all(zip_f)
