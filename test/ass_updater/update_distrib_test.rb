@@ -41,12 +41,12 @@ class UpdateDistribTest < Minitest::Test
   def test_get
     assert_equal @update_distrib,
       @update_distrib.get('', '')
-    assert_equal @_1cv8zip_content,
+    assert_equal @_1cv8zip_content.sort,
       Dir.glob(File.join(@tmp_tmplt_root,
                          '1c',
                          'HRM',
                          '3_0_10_32',
-                         '*')).map{|i| File.basename(i).force_encoding('UTF-8')}
+                         '*')).map{|i| File.basename(i).force_encoding('UTF-8')}.sort
   end
 
   def test_file_list
