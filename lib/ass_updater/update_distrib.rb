@@ -68,7 +68,7 @@ class AssUpdater
     def unzip_all(zip_f)
       Zip::File.open(zip_f.path) do |zf|
         zf.each do |entry|
-          dest_file = File.join(local_path, entry.name.encode('UTF-8', 'cp866'))
+          dest_file = File.join(local_path, encode_(entry.name))
           FileUtils.mkdir_p(File.dirname(dest_file))
           FileUtils.rm_r(dest_file) if File.exist?(dest_file)
           entry.extract(dest_file)
@@ -76,6 +76,14 @@ class AssUpdater
       end
       local_path
     end
+
+    require 'rchardet'
+
+    def encode_(str)
+      en = CharDet.detect(str)["encoding"]
+      str.encode('UTF-8', en)
+    end
+    private :encode_
 
     def download_distrib(tmp_f, user, password)
       tmp_f.write(ass_updater.http.get(file,

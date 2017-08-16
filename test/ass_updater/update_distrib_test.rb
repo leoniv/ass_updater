@@ -89,4 +89,16 @@ class UpdateDistribTest < Minitest::Test
     assert_equal fix_path, @update_distrib.send(:fix_path, path)
   end
 
+  def test_encode_utf_8
+    assert_equal 'UTF-8', @update_distrib.send(:encode_, 'UTF-8')
+    assert_equal 'УТФ-8', @update_distrib.send(:encode_, 'УТФ-8')
+  end
+
+  def test_encode_cp_1251
+    assert_equal 'ВИН-1251', @update_distrib.send(:encode_, 'ВИН-1251'.encode('cp1251', 'UTF-8'))
+  end
+
+  def test_encode_cp_866
+    assert_equal 'ВИН-866', @update_distrib.send(:encode_, 'ВИН-866'.encode('cp866', 'UTF-8'))
+  end
 end
