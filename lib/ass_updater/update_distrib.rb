@@ -12,7 +12,7 @@ class AssUpdater
       @ass_updater = ass_updater
       @version = AssUpdater::AssVersion.new(version)
       @version_info = @ass_updater.update_history[@version]
-      @tmplt_root = tmplt_root
+      @tmplt_root = tmplt_root.to_s.force_encoding('UTF-8')
       @target = AssUpdater::AssVersion.convert_array version_info['target']
     end
 
